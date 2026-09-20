@@ -1,0 +1,198 @@
+/*
+ * Enacted Identity Stylesheet (identity.css)
+ * Governed by ENACTED_SUBSCRIPTION_BUILD_SPEC.md §1 & §7b
+ * Ratified Palette:
+ *   Ink:    #0b2732 (Primary text, deep headings, strong accents)
+ *   Slate:  #527a83 (Muted text, primary button backgrounds, borders)
+ *   Mint:   #9cd0ca (Active states, highlight accents, focus rings)
+ *   Ghost:  #88a1a6 (Secondary borders, disabled states, subtle metadata)
+ *   Struck: #a05252 (Repealed / deleted / error indicators)
+ *   Paper:  #f7f4ee (Canvas / page background)
+ * Typography: Source Serif 4 + serif fallbacks
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap');
+
+:root {
+  --ink: #0b2732;
+  --slate: #527a83;
+  --mint: #9cd0ca;
+  --ghost: #88a1a6;
+  --struck: #a05252;
+  --paper: #f7f4ee;
+  --white: #ffffff;
+  --border: rgba(82, 122, 131, 0.28);
+  --border-focus: #527a83;
+  
+  --font-serif: "Source Serif 4", Georgia, Charter, "Bitstream Charter", Cambria, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.enacted-container {
+  max-width: 680px;
+  margin: 48px auto;
+  padding: 0 24px;
+}
+
+/* Header & Brand */
+.enacted-header {
+  margin-bottom: 36px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+}
+
+.enacted-brand {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px 0;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.enacted-brand span.mark {
+  color: var(--slate);
+  font-weight: 400;
+}
+
+.enacted-posture {
+  font-size: 13px;
+  color: var(--slate);
+  margin: 4px 0 0 0;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Card Component */
+.enacted-card {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  box-shadow: 0 1px 4px rgba(11, 39, 50, 0.04);
+}
+
+.enacted-card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Forms & Fields */
+.enacted-field {
+  margin-bottom: 22px;
+}
+
+.enacted-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.enacted-help {
+  font-size: 12px;
+  color: var(--slate);
+  margin-top: 4px;
+}
+
+.enacted-input,
+.enacted-select,
+.enacted-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: var(--font-serif);
+  color: var(--ink);
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.enacted-input:focus,
+.enacted-select:focus,
+.enacted-textarea:focus {
+  outline: none;
+  border-color: var(--slate);
+  box-shadow: 0 0 0 2px rgba(156, 208, 202, 0.4);
+}
+
+.enacted-textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+/* Buttons */
+.enacted-btn {
+  display: inline-block;
+  background-color: var(--ink);
+  color: var(--white);
+  border: 1px solid var(--ink);
+  padding: 11px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font-serif);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.enacted-btn:hover {
+  background-color: var(--slate);
+  border-color: var(--slate);
+}
+
+/* Status Pill / Chip */
+.enacted-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--paper);
+  color: var(--slate);
+}
+
+/* Privacy & Legal Notices */
+.enacted-privacy-box {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+/* Footer Component */
+.enacted-footer {
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  font-size: 12px;
+  color: var(--slate);
+  text-align: center;
+  line-height: 1.6;
+}
