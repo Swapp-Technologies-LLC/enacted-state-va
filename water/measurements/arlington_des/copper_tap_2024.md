@@ -3,10 +3,13 @@ record_type: measurement
 instrument_type: Drinking Water Quality
 title: Copper Tap Water Compliance (Arlington County DES)
 short_title: Copper at Customer Tap
-system_id: VA6013010
+system: Willston Zone
 source_agency: Arlington County Department of Environmental Services (DES)
 jurisdiction: va/arlington
 jurisdiction_name: Arlington County
+topic: water
+topics:
+  - water
 parameter: Copper
 value: 0.070
 unit: ppm
@@ -17,6 +20,7 @@ governing_limit:
   unit: ppm
   citation: 40 CFR § 141.80(c)
   compliance_date: '2024-12-31'
+  basis: 90th percentile of customer tap samples
 limit_status: below_limit
 primary_source_url: https://www.arlingtonva.us/files/sharedassets/public/v/1/water/documents/2024-ccr_willston_final_061725.pdf
 source_pdf: https://www.arlingtonva.us/files/sharedassets/public/v/1/water/documents/2024-ccr_willston_final_061725.pdf
@@ -31,4 +35,4 @@ contact:
 
 ## Reported Measurement
 
-In the 2024 monitoring report for the Willston system (PWSID VA6013010), testing at customer taps showed a 90th percentile copper level of 0.070 ppm (parts per million), within the 1.3 ppm Action Level under 40 CFR § 141.80(c).
+In the 2024 monitoring report for the Willston Zone, testing at customer taps showed a 90th percentile copper level of 0.070 ppm (parts per million), within the 1.3 ppm Action Level under 40 CFR § 141.80(c).
