@@ -54,6 +54,7 @@ FORBIDDEN_PATTERNS = [
     (re.compile(r'@' + r'swapp\b', re.IGNORECASE), "Internal organization email domain"),
     (re.compile(r'\bAGENTS\.' + r'md\b'), "Internal standing rules mention"),
     (re.compile(r'enacted\.org', re.IGNORECASE), "Non-Swapp unowned domain enacted.org"),
+    (re.compile(r'enacted\.law', re.IGNORECASE), "Non-Swapp unowned domain enacted.law"),
 ]
 
 BLOCKLISTED_DOMAINS = [
