@@ -5,7 +5,6 @@ title: Copper Tap Water Compliance (Arlington County DES)
 short_title: Copper at Customer Tap
 system: Willston Zone
 source_agency: Arlington County Department of Environmental Services (DES)
-jurisdiction_key: arlington
 jurisdiction: va/arlington
 jurisdiction_name: Arlington County
 topic: water

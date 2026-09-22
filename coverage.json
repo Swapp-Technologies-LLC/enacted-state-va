@@ -1,0 +1,15 @@
+{
+  "state": "va",
+  "name": "Virginia",
+  "jurisdictions": {
+    "va/alexandria": "City of Alexandria",
+    "va/arlington": "Arlington County",
+    "va/fairfax_city": "City of Fairfax",
+    "va/fairfax_county": "Fairfax County",
+    "va/falls_church": "City of Falls Church",
+    "va/loudoun": "Loudoun County",
+    "va/manassas": "City of Manassas",
+    "va/manassas_park": "City of Manassas Park",
+    "va/prince_william": "Prince William County"
+  }
+}
