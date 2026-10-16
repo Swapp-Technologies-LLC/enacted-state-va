@@ -105,16 +105,25 @@ def validate_authority_data(auth_data: dict, jur_name: str, cache_dir: str) -> l
         if quoted and not _appears(quoted):
             errors.append(f"{jur_name}.{block_name}.quoted_sentence: '{quoted}' does not appear in cached page text")
 
-        if phone and quoted:
-            norm_quoted = str(quoted).replace('\u2011', '-').replace('\xa0', ' ')
-            norm_phone = str(phone).replace('\u2011', '-').replace('\xa0', ' ')
-            if ' '.join(norm_phone.split()) not in ' '.join(norm_quoted.split()):
+        if quoted:
+            clean_quoted = ' '.join(str(quoted).replace('\u2011', '-').replace('\xa0', ' ').split())
+            clean_office = ' '.join(str(office).replace('\u2011', '-').replace('\xa0', ' ').split()) if office else ""
+            clean_phone = ' '.join(str(phone).replace('\u2011', '-').replace('\xa0', ' ').split()) if phone else ""
+            if office and clean_office not in clean_quoted:
+                errors.append(f"{jur_name}.{block_name}.quoted_sentence: does not contain office '{office}'")
+            if phone and clean_phone not in clean_quoted:
                 errors.append(f"{jur_name}.{block_name}.quoted_sentence: does not contain phone '{phone}'")
+            if office and phone and (clean_office in clean_quoted) and (clean_phone in clean_quoted):
+                if clean_quoted.find(clean_office) >= clean_quoted.find(clean_phone):
+                    errors.append(f"{jur_name}.{block_name}.quoted_sentence: office '{office}' must appear before phone '{phone}'")
 
         email = block_data.get("email")
         if email:
             if not _appears(email):
                 errors.append(f"{jur_name}.{block_name}.email: '{email}' does not appear in cached page text")
+            local_part = str(email).strip().split("@", 1)[0]
+            if re.search(r'[A-Za-z]+\.[A-Za-z]+', local_part):
+                errors.append(f"{jur_name}.{block_name}.email: '{email}' local part looks like a person name (contains '.' between alphabetic runs)")
 
     return errors
 

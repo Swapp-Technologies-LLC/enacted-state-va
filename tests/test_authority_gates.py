@@ -24,6 +24,7 @@ FIXTURE_HTML = (
     b"<body>\n"
     b"<h1>Testville Zoning Division</h1>\n"
     b"<p>For questions regarding zoning compliance, please call the Testville Zoning Division at 555-0199 or email zoning@example.invalid.</p>\n"
+    b"<p>Call 555-0199 to reach the Testville Zoning Division or email first.last@example.invalid.</p>\n"
     b"<p>Council Clerk Office: 555-0188</p>\n"
     b"</body>\n"
     b"</html>\n"
@@ -107,10 +108,28 @@ def test_phone_not_in_quoted_sentence_failure(fixture_env):
     auth = dict(fixture_env["base_auth"])
     auth["zoning_office"] = dict(auth["zoning_office"])
     # Quoted sentence that does not contain the phone 555-0199
-    auth["zoning_office"]["quoted_sentence"] = "For questions regarding zoning compliance, please call Testville Zoning Division."
+    auth["zoning_office"]["quoted_sentence"] = "For questions regarding zoning compliance, please call the Testville Zoning Division"
 
     errors = validate_authority_data(auth, "xx/testville", fixture_env["cache_dir"])
     assert any("quoted_sentence: does not contain phone '555-0199'" in e for e in errors)
+
+def test_office_not_in_quoted_sentence_failure(fixture_env):
+    auth = dict(fixture_env["base_auth"])
+    auth["zoning_office"] = dict(auth["zoning_office"])
+    # Quoted sentence present on page with phone, but missing the office name
+    auth["zoning_office"]["quoted_sentence"] = "at 555-0199 or email zoning@example.invalid."
+
+    errors = validate_authority_data(auth, "xx/testville", fixture_env["cache_dir"])
+    assert any("quoted_sentence: does not contain office 'Testville Zoning Division'" in e for e in errors)
+
+def test_office_after_phone_in_quoted_sentence_failure(fixture_env):
+    auth = dict(fixture_env["base_auth"])
+    auth["zoning_office"] = dict(auth["zoning_office"])
+    # Quoted sentence present on page with both office and phone, but phone precedes office
+    auth["zoning_office"]["quoted_sentence"] = "Call 555-0199 to reach the Testville Zoning Division"
+
+    errors = validate_authority_data(auth, "xx/testville", fixture_env["cache_dir"])
+    assert any("office 'Testville Zoning Division' must appear before phone '555-0199'" in e for e in errors)
 
 def test_email_mismatch_failure(fixture_env):
     auth = dict(fixture_env["base_auth"])
@@ -119,6 +138,14 @@ def test_email_mismatch_failure(fixture_env):
 
     errors = validate_authority_data(auth, "xx/testville", fixture_env["cache_dir"])
     assert any("email: 'unlisted@example.invalid' does not appear in cached page text" in e for e in errors)
+
+def test_email_person_local_part_failure(fixture_env):
+    auth = dict(fixture_env["base_auth"])
+    auth["zoning_office"] = dict(auth["zoning_office"])
+    auth["zoning_office"]["email"] = "first.last@example.invalid"
+
+    errors = validate_authority_data(auth, "xx/testville", fixture_env["cache_dir"])
+    assert any("local part looks like a person name" in e for e in errors)
 
 def test_missing_zoning_office_section(fixture_env):
     auth = {"legislative_body": dict(fixture_env["base_auth"]["zoning_office"])}
