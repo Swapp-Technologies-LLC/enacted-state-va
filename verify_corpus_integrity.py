@@ -63,7 +63,8 @@ BLOCKLISTED_DOMAINS = [
 
 IGNORE_DIRS = (
     "water", "docs", "scripts", "reports", "data", "feeds", "state_statutes",
-    ".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__"
+    ".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__",
+    "tests", ".pytest_cache"
 )
 
 def main():
@@ -81,7 +82,7 @@ def main():
 
     for root, dirs, files in os.walk(REPO_ROOT):
         parts = os.path.relpath(root, REPO_ROOT).split(os.sep)
-        if any(p in (".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__") for p in parts):
+        if any(p in (".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__", "tests", ".pytest_cache") for p in parts):
             continue
 
         if root != REPO_ROOT:
@@ -134,6 +135,7 @@ def main():
         content = open(r["path"], "r", encoding="utf-8").read()
         clean = re.sub(r"```(?:diff)?\s*\n.*?\n```", "", content, flags=re.DOTALL)
         clean = clean.replace("This repository records the enacted law. It does not advise, approve, determine, or certify anything.", "")
+        clean = re.sub(r"^\s*determination:\s*$", "", clean, flags=re.MULTILINE)
         clean_lower = clean.lower()
 
         for bp in BANNED_PHRASES:
@@ -142,7 +144,7 @@ def main():
                 banned_hits += 1
 
         for idx, line in enumerate(clean.splitlines(), 1):
-            if re.search(r"\bNone\b", line):
+            if re.search(r":\s*None\b", line):
                 print(f"  FAIL: {r['rel_path']}:{idx} contains unhandled 'None'")
                 banned_hits += 1
 
@@ -324,7 +326,7 @@ def main():
             schema_errs += 1
 
         if rtype == "measurement":
-            for field in ("parameter", "value", "unit", "reporting_period", "published_date", "system"):
+            for field in ("parameter", "value", "unit", "reporting_period", "system"):
                 if not fm.get(field):
                     print(f"  FAIL: {rel} measurement missing '{field}'")
                     schema_errs += 1

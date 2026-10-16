@@ -1,0 +1,3 @@
+# The saved regulator page under .cache/ is hash-checked byte for byte by the site build.
+# Never convert its line endings (it contains CRLF as saved from the source).
+.cache/*.html -text
