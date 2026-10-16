@@ -1,4 +1,5 @@
 # Cache & artifacts
-.cache/
+.cache/*
+!.cache/98e67321fd5d5f2b2605c7dff67d0b234758529823786f7e266b97214537a7b2.html
 __pycache__/
 *.py[cod]
