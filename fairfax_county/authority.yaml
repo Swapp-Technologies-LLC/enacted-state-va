@@ -1,0 +1,9 @@
+zoning_office:
+  office: "Zoning Administration Division"
+  phone: "703-324-1290"
+  email: "DPZMail2@fairfaxcounty.gov"
+  web: "https://www.fairfaxcounty.gov/planning-development/about-us"
+  source_url: "https://www.fairfaxcounty.gov/planning-development/about-us"
+  source_sha256: "7a9f69c069bb748f6e81294ca835b681efafba21d216a4e591aebaa4b2ad9276"
+  source_fetched_at: "2026-10-16T06:57:03.743674+00:00"
+  quoted_sentence: "Herrity Building , Suite 801 Phone: 703-324-1290, TTY 711 Fax: 703-324-3924 DPZMail2@fairfaxcounty.gov Learn More Zoning Administration Division The Zoning Administration Division (ZAD) enforces, maintains and administers the provisions of the Fairfax County Zoning Ordinance and Noise Ordinance ."

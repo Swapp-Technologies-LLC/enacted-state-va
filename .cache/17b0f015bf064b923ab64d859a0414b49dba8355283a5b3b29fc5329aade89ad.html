@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en-US">
+<!--<![endif]-->
+<head>
+	<!-- Published by OpenCities, 1.38.0.1 -->
+
+    
+        
+    
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="theme-color" content="#FFFFFF"/>
+    <title>Board of Zoning Appeals (BZA) – Official Website of Arlington County Virginia Government</title>
+	<meta name="generator" content="OpenCities - https://granicus.com/product/opencities" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Using mobile-web-app-capable for now to enable full-screen experience on supported platforms -->
+    <!-- Note: This tag works mainly on Android Chrome. It does NOT enable full-screen mode on iOS Safari. -->
+    <!-- For iOS, the correct tag is: <meta name="apple-mobile-web-app-capable" content="yes"> -->
+    <!-- TODO: Monitor for updated meta tag standards from Apple or other browser vendors -->
+    <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="description" content="The Arlington County Board of Zoning Appeals (BZA) has powers, duties, and procedures as set forth in broad terms in the Code of Virginia and in the Arlington County Zoning Ordinance." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals" />
+    <meta property="og:title" content="Board of Zoning Appeals (BZA)" />
+    <meta property="og:description" content="The Arlington County Board of Zoning Appeals (BZA) has powers, duties, and procedures as set forth in broad terms in the Code of Virginia and in the Arlington County Zoning Ordinance." />
+    <meta property="og:image" content="https://www.arlingtonva.us/files/ocwebsite/Public/HeroImage/CountyLogo_Color_1200x630.png?w=1200" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Board of Zoning Appeals (BZA)" />
+    <meta property="twitter:description" content="The Arlington County Board of Zoning Appeals (BZA) has powers, duties, and procedures as set forth in broad terms in the Code of Virginia and in the Arlington County Zoning Ordinance." />
+    <meta property="twitter:image" content="https://www.arlingtonva.us/files/ocwebsite/Public/HeroImage/CountyLogo_Color_1200x630.png?w=1080" />
+    <link rel="canonical" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals" />
+
+    
+    <link rel="icon" type="image/png" href="/files/ocfavicon/Public/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/files/ocfavicon/Public/favicon.svg" />
+<link rel="shortcut icon" href="/files/ocfavicon/Public/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/files/ocfavicon/Public/apple-touch-icon.png" />
+<link rel="manifest" href="/files/ocfavicon/Public/site.webmanifest" />
+    <script>
+        (function () {
+            if (window.__UNLOAD_LAZY_PATCH__) return;
+            window.__UNLOAD_LAZY_PATCH__ = true;
+
+            var supportsPageHide = ("onpagehide" in window);
+            var mappedType = supportsPageHide ? "pagehide" : "beforeunload";
+            var nativeAdd = window.addEventListener;
+            var nativeRemove = window.removeEventListener;
+            var unloadMap = null;
+            var patched = false;
+
+            function ensurePatched() {
+                if (patched) return;
+                unloadMap = new WeakMap();
+
+                window.addEventListener = function (type, listener, options) {
+                    if (type === "unload") {
+                        var wrapped = function (evt) {
+                            if (supportsPageHide && evt.persisted) return;
+                            listener.call(this, evt);
+                        };
+                        unloadMap.set(listener, wrapped);
+                        return nativeAdd.call(this, mappedType, wrapped, options);
+                    }
+                    return nativeAdd.call(this, type, listener, options);
+                };
+
+                window.removeEventListener = function (type, listener, options) {
+                    if (type === "unload") {
+                        var wrapped = unloadMap.get(listener);
+                        if (wrapped) {
+                            nativeRemove.call(this, mappedType, wrapped, options);
+                            unloadMap.delete(listener);
+                        }
+                        return;
+                    }
+                    return nativeRemove.call(this, type, listener, options);
+                };
+
+                var orig = null;
+                Object.defineProperty(window, "onunload", {
+                    configurable: true, enumerable: true,
+                    get: function () { return orig; },
+                    set: function (h) {
+                        orig = h;
+                        if (typeof h === "function") window.addEventListener("unload", h);
+                    }
+                });
+                patched = true;
+            }
+
+            window.addEventListener = function (type, listener, options) {
+                if (type === "unload") {
+                    ensurePatched();
+                    return window.addEventListener(type, listener, options);
+                }
+                return nativeAdd.call(this, type, listener, options);
+            };
+
+            window.removeEventListener = function (type, listener, options) {
+                if (type === "unload" && !patched) {
+                    return;
+                }
+                return nativeRemove.call(this, type, listener, options);
+            };
+
+            function patchTelerik() {
+                ensurePatched();
+                var ns = window.RadAjaxNamespace;
+                if (!ns || !ns.EventManager || !ns.EventManager.Add || ns.EventManager.__UnloadPatched) return;
+                var origAdd = ns.EventManager.Add;
+                ns.EventManager.Add = function (el, evtName, handler, clientId) {
+                    if (el === window && evtName === "unload") {
+                        return window.addEventListener("unload", handler);
+                    }
+                    return origAdd.call(this, el, evtName, handler, clientId);
+                };
+                ns.EventManager.__UnloadPatched = true;
+            }
+
+            if (window.RadAjaxNamespace)
+                patchTelerik();
+            else (window.requestIdleCallback || function (cb)
+            {
+                setTimeout(cb, 120);
+            })(patchTelerik);
+        })();
+    </script>
+    <!-- Preconnecting to Google Fonts servers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Defer Roboto font loading to avoid render-blocking -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const robotoLink = document.createElement('link');
+            robotoLink.rel = 'stylesheet';
+            robotoLink.href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap';
+            document.head.appendChild(robotoLink);
+        });
+    </script>
+
+    <style>
+        .gm-style, .gm-style * {
+            font-family: 'Roboto', system-ui, -apple-system, "Segoe UI", Arial, sans-serif !important;
+        }
+    </style>
+
+    <script>
+        document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, "js");
+    </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+        
+            <script type="text/javascript">
+                window.__oc_flags_ImprovedBreakpointEventHandling = true;
+            </script>
+            
+        
+    
+    
+    
+        <script type="text/javascript">
+            var __metaQueryBreakpoints = {
+                'sc-size-4': '(max-width: 480px)',
+                'sc-size-3': '(min-width: 480px) and (max-width: 768px)',
+                'sc-size-2': '(min-width: 768px) and (max-width: 992px)',
+                'sc-size-1': '(min-width: 992px)'
+            }
+
+            var __ocSizePoints = [
+                { min: 0, name: 'sc-size-4' },
+                { min: 480, name: 'sc-size-3' },
+                { min: 768, name: 'sc-size-2' },
+                { min: 992, name: 'sc-size-1' }
+            ];
+
+        </script>
+    
+
+    <!-- Framework Section -->
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/files/templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/jquery-1.12.4.min.js?seamlessts=639263251460015398" ><\/script>')</script>
+
+    <!--Google Maps API Loader – Improved Version to avoid Warning
+    This script loads the Google Maps JavaScript API using a dynamic and async method.
+    It replaces the old static <script> tag to avoid performance warnings from Google.
+
+    Dynamically creates the <script> tag with loading = async for better performance
+    Builds the API URL with required libraries(places, geometry, marker, geocoding)
+    Uses a Promise and callback(google.maps.__ib__) to confirm when the script is ready
+
+    It Avoids Google’s warning about direct script loading
+    Improves page load speed by loading the API asynchronously-->
+
+    
+        <script>
+            (function (root) {
+                root.OpenCities = root.OpenCities || {};
+                if (!root.OpenCities.GoogleMapsLoader) {
+                    root.OpenCities.GoogleMapsLoader = {
+                        _cbs: [],
+                        _ready: false,
+                        onReady: function (cb) {
+                            if (this._ready) { try { cb(); } catch (e) { console.error(e); } }
+                            else if (typeof cb === 'function') this._cbs.push(cb);
+                        },
+                        _fire: function () {
+                            if (this._ready) return;
+                            this._ready = true;
+                            var q = this._cbs.splice(0);
+                            for (var i = 0; i < q.length; i++) {
+                                try { q[i](); } catch (e) { console.error(e); }
+                            }
+                        }
+                    };
+                }
+            })(window);
+
+            (g => {
+                var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__",
+                    m = document, b = window;
+                b = b[c] || (b[c] = {});
+                var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams,
+                    u = () => h || (h = new Promise(async (resolve, reject) => {
+                        a = m.createElement("script");
+                        e.set("libraries", [...r] + "");
+                        for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+                        e.set("callback", c + ".maps." + q);
+                        a.src = "https://maps." + c + "apis.com/maps/api/js?" + e.toString();
+                        a.loading = "async";
+                        a.async = true;
+                        a.defer = true;
+                        d[q] = resolve;
+                        a.onerror = () => reject(Error(p + " could not load."));
+                        a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+                        m.head.append(a);
+                    }));
+                if (d[l]) {
+                    console.warn(p + " only loads once. Ignoring duplicate load.");
+                } else {
+                    d[l] = (f, ...n) => (r.add(f), u().then(() => d[l](f, ...n)));
+                }
+            })({
+                key: "AIzaSyBgiiJQPMLlo_02ImhUgQI3L0yEGHjoctI",
+                v: "3.65"
+            });
+
+            (async () => {
+                try {
+                    if (!google?.maps?.importLibrary) return;
+
+                    if (!window.OpenCities.__mapsLibsPromise) {
+                        window.OpenCities.__mapsLibsPromise = Promise.all([
+                            google.maps.importLibrary('maps'),
+                            google.maps.importLibrary('places'),
+                            google.maps.importLibrary('geocoding'),
+                            google.maps.importLibrary('marker'),
+                            google.maps.importLibrary('geometry')
+                        ]);
+                    }
+                    await window.OpenCities.__mapsLibsPromise;
+
+                    if (window.OpenCities?.GoogleMapsLoader) {
+                        window.OpenCities.GoogleMapsLoader._fire();
+                    }
+                } catch (err) {
+                    console.error('Google Maps failed to initialise', err);
+                }
+            })();
+        </script>
+    
+    <script src="/files/templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/modernizr.custom.710f3bf.js?seamlessts=639263251460015398" defer></script>
+    
+    <!--// End Framework Section -->
+    <!-- OpenCities Section -->
+    <script>
+        var OpenCities = OpenCities || {};
+        OpenCities.Paths = {
+            SiteTemplate: '/files/templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/',
+            ThemePath: '/files/templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/'
+        };
+    </script>
+    <script src='/ocapi/a13d50f5-3271-4eed-acc1-1bb01f4c6139/en-US/websitesettings.js'></script>
+    <script src="/files/templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/oc_head.js?applied=20260630074147"></script>
+    <!-- Script Combine. To enter debug mode for this browser session, enter OcScriptCombineDebug=true as a querystring -->
+<link href="/files/oc-templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/oc_grid.css~oc_style.css~oc_wizard_style.css~oc_main.css~oc_forms.css~oc_wizard.css~oc_wizard_menu.css~oc_main_s1.css~oc_wizard_s1.css~oc_wizard_menu_s1.css~oc_grid_s1.css~OcScriptCombine_Minify0?uniqueid=20260630074147" rel="stylesheet" type="text/css">
+    <!-- Script Combine. To enter debug mode for this browser session, enter OcScriptCombineDebug=true as a querystring -->
+<link href="/files/oc-templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/client_style.css~client.css~client_menu.css~client_s1.css~client_menu_s1.css~client_forms.css~OcScriptCombine_Minify0?uniqueid=20260630074147" rel="stylesheet" type="text/css">
+    <script>
+(function (BackgroundSettings, $, undefined) {
+    BackgroundSettings.initialise = function () {
+        this.Application = {"CSSSelector":".background-container","EnableFade":true,"MediaType":"image"};
+    };
+} (OpenCities.BackgroundSettings = OpenCities.BackgroundSettings || {}, jQuery));
+OpenCities.BackgroundSettings.initialise();
+</script>
+    
+    <!-- Script Combine. To enter debug mode for this browser session, enter OcScriptCombineDebug=true as a querystring -->
+<link href="/files/oc-templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/oc_print.css~client_print.css~OcScriptCombine_Minify0?uniqueid=20260630074147" rel="stylesheet" type="text/css" media="print">
+    <!-- Script Combine. To enter debug mode for this browser session, enter OcScriptCombineDebug=true as a querystring -->
+<script src="/files/oc-templates/00000000-0000-0000-0000-000000000000/48e205af-32b5-43fa-97d5-785a9f23ed57/v/560/external_plugins.js~oc_form_helper.js~oc_main.js~plugins.js~oc_main_init.js~OcScriptCombine_Minify0?uniqueid=20260630074147" defer="true"></script>
+    <!-- Google Tag Manager Header Code -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WSS6P22');</script>
+<!-- End Google Tag Manager -->
+<style>
+button.v-btn.v-btn--contained.theme--light.v-size--default.info.white--text[name="commit"] {
+	background-color: #b45600 !important;
+	border-color: #b45600 !important;
+}
+</style>
+<link rel="stylesheet" href="/files/d6f47a4a-1442-4546-83cd-268c7b71869f/chat-widget.css">
+    
+
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="DYTCK-JM9C8-ED4EP-C3GGK-Z575H",function(){function e(){if(!r){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.appendChild(e),r=!0}}function t(e){r=!0;var n,t,a,i,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",i=(a.frameElement||a).style,i.width=0,i.height=0,i.border=0,i.display="none",o.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void 0;",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=14,window.BOOMR.url=n+"DYTCK-JM9C8-ED4EP-C3GGK-Z575H";var i=document.currentScript||document.getElementsByTagName("script")[0],o=i.parentNode,r=!1,d=document.createElement("link");if(d.relList&&"function"==typeof d.relList.supports&&d.relList.supports("preload")&&"as"in d)window.BOOMR.snippetMethod="p",d.href=window.BOOMR.url,d.rel="preload",d.as="script",d.addEventListener("load",e),d.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!r)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.appendChild(d);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="i674e2qx2t5uo2wrzlaq-f-f09e14ffe-clientnsv4-s.akamaihd.net",i="false"=="true"?2:1,o={"ak.v":"41","ak.cp":"1668543","ak.ai":parseInt("1075935",10),"ak.ol":"0","ak.cr":10,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"2e04cf6","ak.r":41486,"ak.a2":n,"ak.m":"dscb","ak.n":"essl","ak.cport":59546,"ak.gh":"23.220.107.71","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1792133825","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==uKF3U7wE61pAC9TmFWxujlzSzXN57bX3rnKtwaNndEP0mIr9Y6vARoam6OJeluaxW5Ybw5Q8bhPzYHEnId8OpzBd76Pw1fbfa1MUG6iA40HX2eYBbwj+v98LBZwmFvRE/ZsCZGa1Q5kbYvr9PtZQsZ6JVtMRCKjZs8KEp9xqa5IjR6u39snbJg0bnkvQiFwty9XEsOqqKWfqtuCxQi42tKJm9BohJ+dzgYUjBgjwj6r9nHzWfFVhozZnkWyWW0Bf0cQXy7pg7/Au0fu1ZAnBED0HJ0ohzasxK8I8yjs0bntd6MmIcywB5Dyasc/zV7QbTnqVccUCcIICYd5RVsdnYJEmfqo8e8pN8CYWZmtkZXXpiYv4kzg/Jk8z0oM1/xo3uC6K+HVkKP6u7KwdGS/EuXd8B+R954olz5Nwc5uOAx8=","ak.pv":"354","ak.dpoabenc":"","ak.tf":i};if(""!==t)o["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))o["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(o)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:o,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body class="body layout-modern side-menu side-menu-right site-search-always-visble header-full-width content-type-oc-general content-template-oc-full-width group-template-oc-full-width-with-default-header page-name-board-zoning-appeals page-sequence-31 page-depth-3 page-section-2 website-type-primary device-desktop " id="body-top">
+    <div id="skip-to-content-container">
+        <a href="#main-content" class="visuallyhidden focusable" id="skip-to-content-link">Skip to main content</a>
+    </div>
+    <script>
+        // OCNOW-11988 (Cursor): Proactively focus skip link when returning from browser chrome.
+        // Must run inline (not deferred oc_main.js) so focus is intercepted before NVDA speaks footer.
+        (function () {
+            var awaitingReentry = false;
+            var inertSupported = 'inert' in HTMLElement.prototype;
+
+            function isExplicitlyOutsideDocument(node) {
+                return node != null && !document.documentElement.contains(node);
+            }
+
+            function getSkipContainer() {
+                return document.getElementById('skip-to-content-container');
+            }
+
+            function getSkipLink() {
+                return document.getElementById('skip-to-content-link');
+            }
+
+            function applyGuard() {
+                awaitingReentry = true;
+                if (!inertSupported) {
+                    return;
+                }
+                var skipContainer = getSkipContainer();
+                var children = document.body.children;
+                for (var i = 0; i < children.length; i++) {
+                    if (children[i] !== skipContainer) {
+                        children[i].setAttribute('inert', '');
+                    }
+                }
+            }
+
+            function clearGuard() {
+                awaitingReentry = false;
+                if (!inertSupported) {
+                    return;
+                }
+                var children = document.body.children;
+                for (var i = 0; i < children.length; i++) {
+                    children[i].removeAttribute('inert');
+                }
+            }
+
+            function isSkipLinkElement(target) {
+                if (!target) {
+                    return false;
+                }
+                var skipContainer = getSkipContainer();
+                return target.id === 'skip-to-content-link' ||
+                    (skipContainer && skipContainer.contains(target));
+            }
+
+            function focusSkipLink() {
+                var skipLink = getSkipLink();
+                if (!skipLink) {
+                    return;
+                }
+                if (window.scrollY > 0) {
+                    window.scrollTo(0, 0);
+                }
+                skipLink.focus({ preventScroll: true });
+            }
+
+            function scheduleGuardIfDocumentLostFocus() {
+                window.setTimeout(function () {
+                    if (!document.hasFocus()) {
+                        applyGuard();
+                    }
+                }, 0);
+            }
+
+            document.addEventListener('focusout', function (e) {
+                if (isExplicitlyOutsideDocument(e.relatedTarget)) {
+                    applyGuard();
+                }
+            }, true);
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Tab') {
+                    scheduleGuardIfDocumentLostFocus();
+                } else if (e.key === 'F6' || (e.key === 'l' && e.ctrlKey)) {
+                    scheduleGuardIfDocumentLostFocus();
+                }
+            }, true);
+
+            window.addEventListener('focus', function () {
+                if (!awaitingReentry) {
+                    return;
+                }
+                applyGuard();
+                focusSkipLink();
+            }, true);
+
+            document.addEventListener('focusin', function (e) {
+                var reentryFromChrome = awaitingReentry || isExplicitlyOutsideDocument(e.relatedTarget);
+                if (!reentryFromChrome) {
+                    return;
+                }
+                if (isSkipLinkElement(e.target)) {
+                    clearGuard();
+                    return;
+                }
+                applyGuard();
+                focusSkipLink();
+                clearGuard();
+            }, true);
+        })();
+    </script>
+    <form name="mainForm" method="post" action="/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals" id="mainForm">
+<input type="hidden" name="ctl04_seamless_script_manager_TSM" id="ctl04_seamless_script_manager_TSM" value="" />
+<input type="hidden" name="__SEAMLESSVIEWSTATE" id="__SEAMLESSVIEWSTATE" value="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" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+
+
+<script src="/Telerik.Web.UI.WebResource.axd?_TSM_HiddenField_=ctl04_seamless_script_manager_TSM&amp;compress=1&amp;_TSM_CombinedScripts_=%3b%3bSystem.Web.Extensions%2c+Version%3d4.0.0.0%2c+Culture%3dneutral%2c+PublicKeyToken%3d31bf3856ad364e35%3aen-US%3add3ac3d5-1e29-4112-8fed-529caffa8f24%3aea597d4b%3bOpenCities.CustomControls%3aen-US%3a7197b077-b068-4a69-9481-a6cf2e7718f9%3a8e1d32bf" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=EYVjNsQ7oYmzBqCI0dkEyYe0LYmPcVFL4WPcQCXhKfQwUqkAT7lLra0za-OLMuUUcCyPINdTVMHIWti96-8R_oN-trjXUUZnJRzckxTjid4ecctwwEJyNI-05jZYvXHBRiEKL0MUQMEyEJ2FXanyE1uBk88RxZ1wVK6AUn9D4v8rW-LNx2OOtB8vE3hC8P0jk4XZt7GAPiCeYQolxUlwFZA8cuOfgd4u08OASxFdh8mChz3A0YHhuwRrXGVlulfs9SJVkAvulhjdHYIIp1SRohDxt9acTwxUQrOlxuxC847b00zOOWg9SlpwD_iBuQQ1rOK9WH9O_wN9c2TXm4GeXaQHHT4yQ9IlzZXw6th8ch3f-k_n1yYeeurDMbwChXW1Vh_7rpu00kgmegsg9w2J3ququXIPfy2Gq8IscVTmtwouupfmUzAOicU_yESgQ-dG0" type="text/javascript"></script>
+    
+<script type="text/javascript">
+    try{
+        function SeamlessEndRequestHandler(sender, args) {
+            try {
+                var dataItems = args.get_dataItems();
+                if(dataItems.ctl04_seamless_script_manager)
+                    document.getElementById('__SEAMLESSVIEWSTATE').value = dataItems.ctl04_seamless_script_manager;
+            }
+            catch (e) { }
+        }
+
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(SeamlessEndRequestHandler);
+    }
+    catch (e) { }
+</script>
+
+    <div class="unsupported-browser-warning js-element"></div>
+    
+    <div hidden>
+        <span id="new-window-0">opens in new tab or window </span>
+    </div>
+    <div class="overlay-container"></div>
+    
+    <div class="background-container">
+        <div class="page-container">
+            <!-- OC Layout Element GROUP TEMPLATE -->
+            <!--groupTemplateStart--><header><div class="print-header-outer-container print-element">
+<img src="/files/assets/public/templateimages/print-header.png" alt="Arlington County Virginia - Logo" />
+</div>
+            <div class="toolbar-outer-container">
+  <div class="toolbar-inner-container clearfix">
+    <div class="toolbar-item toolbar-language notranslate toolbar-display-dropdown"><div class="no-js-element">
+		  <ul>
+		    <li id="toolbar-language-option-en-us-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=en-US" class="lang-item lang-en-us" data-translate-to="en-us" lang="en-US">English (United States)<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-am-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=am" class="lang-item lang-am" data-translate-to="am" lang="am">አማርኛ<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-ar-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ar" class="lang-item lang-ar" data-translate-to="ar" lang="ar">عربي<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-bn-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=bn" class="lang-item lang-bn" data-translate-to="bn" lang="bn">বাংলা<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-zh-cn-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=zh-CN" class="lang-item lang-zh-cn" data-translate-to="zh-cn" lang="zh-CN">中文<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-zh-tw-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=zh-TW" class="lang-item lang-zh-tw" data-translate-to="zh-tw" lang="zh-TW">中文<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-de-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=de" class="lang-item lang-de" data-translate-to="de" lang="de">Deutsch<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-es-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=es" class="lang-item lang-es" data-translate-to="es" lang="es">Español<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-fr-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=fr" class="lang-item lang-fr" data-translate-to="fr" lang="fr">Français<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-ja-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ja" class="lang-item lang-ja" data-translate-to="ja" lang="ja">日本<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-ko-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ko" class="lang-item lang-ko" data-translate-to="ko" lang="ko"> 한국어<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-mn-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=mn" class="lang-item lang-mn" data-translate-to="mn" lang="mn">Монгол<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-pt-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=pt" class="lang-item lang-pt" data-translate-to="pt" lang="pt">Português<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-ru-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ru" class="lang-item lang-ru" data-translate-to="ru" lang="ru">Pусский<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-ti-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ti" class="lang-item lang-ti" data-translate-to="ti" lang="ti">ትግሪኛ<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-ur-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ur" class="lang-item lang-ur" data-translate-to="ur" lang="ur">اردو<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li id="toolbar-language-option-vi-noscript"><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=vi" class="lang-item lang-vi" data-translate-to="vi" lang="vi">Tiếng Việt<span class="visuallyhidden"> Select this as your preferred language</span></a></li>
+          </ul>
+		</div>
+	<button type="button" role="combobox" aria-controls="toolbar-language-drop-down" aria-expanded="false" aria-haspopup="listbox" aria-autocomplete="none" aria-labelledby="toolbar-language-label" class="toolbar-button toolbar-button-language js-element">  
+        <span class="toolbar-language-globe-icon" aria-hidden="true"></span>
+        <span id="toolbar-language-label" class="current-language">
+            Select a language to translate to
+		</span>
+		<i aria-hidden="true"></i>
+	</button>
+	<div id="toolbar-language-drop-down" role="listbox" aria-label="Available languages" class="toolbar-drop-down toolbar-language-drop-down js-element clearfix">
+		<ul role="group">
+		    <li role="presentation"><a id="toolbar-language-option-en-us" role="option" aria-selected="true" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=en-US" class="lang-item lang-en-us" data-translate-to="en-us" lang="en-US">English (United States)<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-am" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=am" class="lang-item lang-am" data-translate-to="am" lang="am">አማርኛ<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-ar" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ar" class="lang-item lang-ar" data-translate-to="ar" lang="ar">عربي<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-bn" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=bn" class="lang-item lang-bn" data-translate-to="bn" lang="bn">বাংলা<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-zh-cn" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=zh-CN" class="lang-item lang-zh-cn" data-translate-to="zh-cn" lang="zh-CN">中文<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-zh-tw" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=zh-TW" class="lang-item lang-zh-tw" data-translate-to="zh-tw" lang="zh-TW">中文<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-de" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=de" class="lang-item lang-de" data-translate-to="de" lang="de">Deutsch<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-es" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=es" class="lang-item lang-es" data-translate-to="es" lang="es">Español<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-fr" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=fr" class="lang-item lang-fr" data-translate-to="fr" lang="fr">Français<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-ja" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ja" class="lang-item lang-ja" data-translate-to="ja" lang="ja">日本<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-ko" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ko" class="lang-item lang-ko" data-translate-to="ko" lang="ko"> 한국어<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-mn" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=mn" class="lang-item lang-mn" data-translate-to="mn" lang="mn">Монгол<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-pt" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=pt" class="lang-item lang-pt" data-translate-to="pt" lang="pt">Português<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-ru" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ru" class="lang-item lang-ru" data-translate-to="ru" lang="ru">Pусский<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-ti" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ti" class="lang-item lang-ti" data-translate-to="ti" lang="ti">ትግሪኛ<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-ur" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=ur" class="lang-item lang-ur" data-translate-to="ur" lang="ur">اردو<span class="visuallyhidden"> Select this as your preferred language</span></a></li><li role="presentation"><a id="toolbar-language-option-vi" role="option" aria-selected="false" href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals?oc_lang=vi" class="lang-item lang-vi" data-translate-to="vi" lang="vi">Tiếng Việt<span class="visuallyhidden"> Select this as your preferred language</span></a></li>
+        </ul>
+	</div></div>
+  </div>
+</div>
+            <div class="header-outer-container clearfix">
+ 	<div class="header-container header-layout-1  clearfix">
+		
+			<div class="header-site-logo">
+				<a href="https://www.arlingtonva.us/Home" lang="en-US" aria-label="Arlington County Virginia - Home - Logo">
+				</a>
+			</div>
+		    <div class="mobile-search-btn js-element">
+		        <button><i aria-hidden="true"></i><span class="mobile-search-btn-text"><span class="visuallyhidden">Open </span>Search</span></button>
+		    </div>
+			<div class="header-search-control-container" id="header-search">
+				<div class="search-inner-container">
+					<div class="sc-search-panel">
+	<label for="ctl07_txtSearch" id="ctl07_lblSearch" class="sc-search-label">Search</label><input name="ctl07$txtSearch" type="text" id="ctl07_txtSearch" class="sc-search-text" placeholder="Search for a service or a page" /><input type="submit" name="ctl07$btnSearch" value="Search" id="ctl07_btnSearch" class="sc-search-button" />
+</div>
+					<div role="status" id="predictiveResults"></div>
+				</div>
+			</div>
+	</div>
+
+            <div class="side-menu-btn js-element">
+		            <button type="button" aria-expanded="false" aria-controls="nav"><i aria-hidden="true"></i><span class="side-menu-btn-text">Menu</span></button>
+		            </div>
+</div>
+<div class="navigation-outer-container">
+	<div id="nav" role="navigation" class="navigation-container" data-menu-type="offscreen" data-offscreen-position="right" aria-label="primary">
+		<div class="grid">
+			<div class="col-xs-12">              
+                <ul class="sf-menu" id="sc-main-menu"><li class="nav-section-quarters-1 nav-active-path  first-item nav-item-seq-1">
+<a href="https://www.arlingtonva.us/Government" class="nav-level-1 nav-has-children"  target="">
+	<i class="item-icon" aria-hidden="true"></i><span class="item-text">Government</span>
+</a>
+<button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow" aria-controls="sc-menu-second-level-nav-item-seq-1">
+              <i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-second-level-nav-item-seq-1">
+
+          
+            <li class=" "><a  href="https://www.arlingtonva.us/Government/Budget" class="nav-has-children"  target="_self">Budget and Finance</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-1"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-1">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/Budget/Adopted-Budget"  target="_self">Adopted Budget</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Budget/CIP"  target="">Capital Improvement Plan (CIP)</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Budget/Arlington-Wallet"  target="">Arlington Wallet</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Budget/Proposed-Budget"  target="_self">Proposed Budget</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Government/Careers" class="nav-has-children"  target="">Careers</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-2"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-2">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/1-Explore-Careers"  target="">Explore Careers</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/3-Job-Seeker-Resources"  target="">Job Seeker Resources</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/6-Retiree-Resources"  target="">Retiree Resources</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/Retiree-Benefits-Information"  target="">Retiree Benefits Information</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/Jobs-with-Public-Safety-Arlington-Public-Schools"  target="">Jobs with Public Safety & Arlington Public Schools</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/Working-Arlington"  target="">Working for Arlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Careers/Open-Enrollment"  target="">Open Enrollment</a></li></ul></li><li class="nav-active-path "><a  href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups" class="nav-has-children"  target="">Commissions and Advisory Groups</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-3"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-3">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/COA"  target="">Commission on Aging: Age-Friendly Arlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Community-Services-Board"  target="">Community Services Board</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Biophilic-Arlington"  target="">Biophilic Arlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Social-Services-Advisory-Board"  target="">Social Services Advisory Board</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/LGBTQIA-Advisory-Committee"  target="">LGBTQIA+ Advisory Committee</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Government/County-Board" class="nav-has-children"  target="">County Board</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-4"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-4">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/About-the-County-Board"  target="">About the County Board</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/County-Board-Members"  target="">County Board Members</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/Meetings"  target="">Meetings and Agendas</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/Board-Actions"  target="">Board Actions</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/Get-Involved"  target="">Get Involved</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/County-Code-Search"  target="_blank">County Code</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Board/Examination-of-Arlington’s-County-Board-Structure-and-Performance-BSaP"  target="">Examination of Arlington’s County Board Structure and Performance</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Government/County-Leadership" class="nav-has-children"  target="">County Leadership</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-5"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-5">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Board-Members"  target="">County Board Members</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Executive-Bios"  target="">County Leadership Executive Bios</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Organizational-Chart"  target="">Organizational Chart</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/School-Board"  target="_blank">School Board</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Sheriff"  target="">Jose Quiroz</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Treasurer"  target="">Kim Rucker</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Election-Officials"  target="">Gretchen Reinemeyer</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Commissioner-of-Revenue"  target="">Kim Klingler</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/County-Manager"  target="">Mark Schwartz</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Clerk-of-the-Circuit-Court"  target="">Paul Ferguson</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/County-Leadership/Commonwealths-Attorney"  target="">Parisa Dehghani-Tafti</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Government/County-Projects" class=""  target="_self">County Projects</a></li><li class=" "><a  href="https://www.arlingtonva.us/Government/Departments" class="nav-has-children"  target="">Departments & Offices</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-7"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-7">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/COR"  target="">Commissioner of Revenue</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Community-Planning-Housing-Development"  target="">Community Planning, Housing and Development</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/CAO"  target="">County Attorney’s Office</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/County-Board"  target="_self">County Board</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/CMO"  target="">County Manager’s Office</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Courts"  target="">Courts & Judicial Services</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/AED"  target="_blank">Economic Development</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/DES"  target="">Environmental Services</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Fire"  target="">Fire Department</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Emergency-Medical-Services"  target="">Emergency Medical Services</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/DHS"  target="">Human Services (DHS)</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/DMF"  target="">Management and Finance</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Parks-Recreation"  target="">Parks & Recreation</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Police-Department"  target="">Police Department</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/PSCEM"  target="">Public Safety Communications & Emergency Management</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Sheriffs-Office"  target="">Sheriff’s Office</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/DTS"  target="">Technology Services</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Departments/Treasurers-Office"  target="">Treasurer's Office</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Government/Engage-Arlington" class=""  target="_self">Engage Arlington</a></li><li class=" "><a  href="https://www.arlingtonva.us/Government/Meeting-Calendar" class=""  target="">Meeting Calendar</a></li><li class=" "><a  href="https://www.arlingtonva.us/Government/Public-Safety" class="nav-has-children"  target="">Public Safety</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-1-nav-item-seq-10"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-1-nav-item-seq-10">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Arlington-Alert"  target="">Arlington Alert</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Commonwealth’s-Attorney"  target="_self">Commonwealth’s Attorney</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Fire"  target="_self">Fire Department</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Emergency-Preparedness"  target="">Public Safety Communications & Emergency Management</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Police"  target="_self">Police Department</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Sheriff"  target="_self">Sheriff's Office</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Volunteer-with-Public-Safety"  target="">Volunteer</a></li><li  class=" "><a href="https://www.arlingtonva.us/Government/Public-Safety/Office-of-Public-Safety-Wellness"  target="_self">Office of Public Safety Wellness</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Government/Voting" class=""  target="_self">Voting</a></li></ul></li>
+          
+            <li class="nav-section-quarters-1   nav-item-seq-2">
+<a href="https://www.arlingtonva.us/About-Arlington" class="nav-level-1 nav-has-children"  target="">About Arlington</a>
+<button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow" aria-controls="sc-menu-second-level-nav-item-seq-2">
+              <i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-second-level-nav-item-seq-2">
+
+          
+            <li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Data-and-Research" class="nav-has-children"  target="_self">Data and Research</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-2-nav-item-seq-1"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-2-nav-item-seq-1">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Data-and-Research/Arlington-Statistics"  target="_self">Arlington County Profile</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Data-and-Research/Demographics"  target="_self">Demographics</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Data-and-Research/Development-Tracking"  target="_self">Development Tracking</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Data-and-Research/Maps"  target="">GIS Mapping Center</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Data-and-Research/Open-Data-Portal"  target="_blank">Open Data Portal</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Newsroom" class="nav-has-children"  target="">News</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-2-nav-item-seq-2"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-2-nav-item-seq-2">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Arlington-Alert"  target="">Arlington Alert</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Arlington-Video"  target="">Arlington Video</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Connect"  target="">Connect With Us</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Subscribe"  target="">Newsletters</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Engage-Arlington"  target="">Engage Arlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Media-Resources"  target="">Media Resources</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Community-Calendar"  target="">Events Listing</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Search-Arlington-News"  target="">Search Arlington News</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Inside-Arlington"  target="">Inside Arlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Police-News"  target="">Police News</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/County-Logo-and-Branding"  target="">County Logo and Branding</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/March-2026-County-Board-Meeting-Agenda-Highlights"  target="">March 2026 County Board Meeting Agenda Highlights</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Spring-2026-E-CARE-Accepting-Drop-offs-on-March-28"  target="">Spring 2026 E-CARE Accepting Drop-offs on March 28</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Plans-and-Studies" class=""  target="_self">Plans & Studies</a></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Building" class="nav-has-children"  target="_self">Building</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-2-nav-item-seq-4"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-2-nav-item-seq-4">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Building/Codes-and-Ordinances"  target="_self">Codes and Ordinances</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Building/Enforcement-and-Appeals"  target="_self">Enforcement and Appeals</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Building/Green-Building"  target="_self">Green Building</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Building/Inspections"  target="_self">Inspections</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Building/Permits"  target="_self">Permits</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Building/Review-Processes"  target="_self">Review Processes</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Environment" class="nav-has-children"  target="">Environment</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-2-nav-item-seq-5"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-2-nav-item-seq-5">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Environment/Energy"  target="_self">Arlington Initiative to Rethink Energy (AIRE)</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Environment/Gardening"  target="_self">Gardens</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Environment/Pollution"  target="_self">Prevent Pollution</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Environment/Stormwater"  target="_self">Stormwater</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Environment/Recycling"  target="">Recycling, Trash and Related Services</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Environment/Trees"  target="_self">Urban Forestry</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Transportation" class="nav-has-children"  target="">Transportation</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-2-nav-item-seq-6"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-2-nav-item-seq-6">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Transportation/Arlington-Transit-ART"  target="_blank">Arlington Transit (ART)</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Transportation/BikeArlington"  target="_blank">BikeArlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Transportation/Commuting"  target="_blank">Commuting</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Transportation/Parking"  target="">Parking</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Transportation/Streets"  target="">Streets</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Transportation/WalkArlington"  target="_blank">WalkArlington</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/County-Projects" class=""  target="_self">County Projects</a></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Schools" class=""  target="_blank">Schools</a></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Tourism" class=""  target="_blank">Tourism</a></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Things-to-Do" class="nav-has-children"  target="">Things to Do</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-2-nav-item-seq-10"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-2-nav-item-seq-10">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Arts-Culture"  target="_self">Arts & Culture</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Camps"  target="_self">Camps</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Events-Calendar"  target="">Events Listing</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Farmers-Markets"  target="">Farmers Markets</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Parks-and-Facilities"  target="">Find a Park</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Libraries"  target="_blank">Libraries</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Nature-Centers"  target="">Nature Centers</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Pools-and-Spraygrounds"  target="">Pools and Spraygrounds</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Programs-for-All-Ages"  target="_self">Programs for All Ages</a></li><li  class=" "><a href="https://www.arlingtonva.us/About-Arlington/Things-to-Do/Sports"  target="">Sports</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Arlington-Sister-Cities" class=""  target="">Arlington Sister Cities</a></li><li class=" "><a  href="https://www.arlingtonva.us/About-Arlington/Arlington-County-Profile" class=""  target="_self">Arlington County Profile</a></li></ul></li>
+          
+            <li class="nav-section-quarters-2   nav-item-seq-3">
+<a href="https://www.arlingtonva.us/Residents" class="nav-level-1 nav-has-children"  target="">Residents</a>
+<button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow" aria-controls="sc-menu-second-level-nav-item-seq-3">
+              <i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-second-level-nav-item-seq-3">
+
+          
+            <li class=" "><a  href="https://www.arlingtonva.us/Residents/Arts-Culture" class="nav-has-children"  target="">Arts & Culture</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-3-nav-item-seq-1"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-3-nav-item-seq-1">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Residents/Arts-Culture/Arlington-Arts"  target="_self">Arlington Arts</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Arts-Culture/For-Artists"  target="_self">For Artists</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Arts-Culture/For-Visitors"  target="_self">For Visitors</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Arts-Culture/Public-Art"  target="_self">Public Art</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Arts-Culture/Historic-Places"  target="_self">Historic Places</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Children-Families" class="nav-has-children"  target="_self">Children & Families</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-3-nav-item-seq-2"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-3-nav-item-seq-2">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Residents/Children-Families/APCYF"  target="_self">Partnership for Children Youth & Family</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Classes-Camps" class=""  target="">Classes & Camps</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Health-and-Human-Services" class=""  target="_self">Health and Human Services</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Get-Involved" class="nav-has-children"  target="">Get Involved</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-3-nav-item-seq-5"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-3-nav-item-seq-5">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Civic-Associations"  target="_self">Civic & Citizen Associations</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Advisory-Groups-and-Commissions"  target="">Commissions and Advisory Groups</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Engage-Arlington"  target="">Engage Arlington</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Meetings-and-Events"  target="">Meeting Calendar</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Subscribe"  target="">Newsletters</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Run-for-Office"  target="_blank">Run for Office</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Get-Involved/Volunteer"  target="_blank">Volunteer</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Libraries" class=""  target="_self">Libraries</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Licenses-Permits-and-Registrations" class=""  target="_self">Permits</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Noise-Control-Ordinance" class=""  target="_blank">Noise Control Ordinance</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Parks-and-Recreation" class=""  target="_self">Parks & Recreation</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Taxes" class="nav-has-children"  target="_self">Taxes</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-3-nav-item-seq-10"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-3-nav-item-seq-10">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Residents/Taxes/Property-Assessments"  target="_blank">Property Assessments</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Taxes/Real-Estate-Taxes"  target="">Real Estate Taxes and Payments</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Taxes/Tax-Relief"  target="">Tax Relief</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Taxes/Vehicle-Personal-Property-Tax"  target="">Vehicle Personal Property Tax Assessments</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Payments" class="nav-has-children"  target="">Payments</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-3-nav-item-seq-11"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-3-nav-item-seq-11">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Residents/Payments/Customer-Assessment-and-Payment-Portal-CAPP"  target="_blank">Customer Assessment and Payment Portal (CAPP)</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Payments/Payment-Options"  target="">Payment Options</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Payments/Due-Dates"  target="">Tax Payment Due Dates</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Payments/Taxes"  target="">Taxes & Payments</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Payments/Parking-Tickets"  target="">Parking Ticket Payments</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Payments/Water-and-Sewer"  target="">Water and Sewer</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Arlington-County-Profile" class=""  target="_self">Arlington County Profile</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Recycling-and-Trash" class="nav-has-children"  target="_self">Recycling and Trash</a><button aria-label="Expand" aria-haspopup="true" class="mobnav-subarrow-child" aria-controls="sc-menu-third-level-nav-item-seq-3-nav-item-seq-13"><i aria-hidden="true"></i>
+              </button>
+<ul id="sc-menu-third-level-nav-item-seq-3-nav-item-seq-13">
+          
+            <li  class=" "><a href="https://www.arlingtonva.us/Residents/Recycling-and-Trash/Apartments-and-Condos"  target="">Apartments and Condos</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Recycling-and-Trash/Property-Owners-and-Managers"  target="">Property Owners and Managers</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Recycling-and-Trash/Single-Family-Homes"  target="_self">Single Family Homes</a></li><li  class=" "><a href="https://www.arlingtonva.us/Residents/Recycling-and-Trash/Where-Does-It-Go"  target="">Where Does It Go?</a></li></ul></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Water-and-Sewer" class=""  target="">Water & Utilities</a></li><li class=" "><a  href="https://www.arlingtonva.us/Residents/Voting-Subsite" class=""  target="_self">Voting & Elections</a></li></ul></li>
+          
+            <li class="nav-section-quarters-2   nav-item-seq-4">
+<a href="https://www.arlingtonva.us/Business" class="nav-level-1 "  target="">Business Resources</a>
+</li>
+          
+            <li class="nav-section-quarters-3   nav-item-seq-5">
+<a href="https://www.arlingtonva.us/A-Z-Index" class="nav-level-1 "  target="">A-Z Index</a>
+</li>
+          
+            </ul>
+			</div>
+		</div>
+	</div>
+</div>
+            </header>
+            <div class="content-outer-container">
+                <div id="main" role="main" class="main-outer-container clearfix">
+                        
+                        <div class="content-main-container">
+                            <div class="grid">
+					            <div class="col-xs-12">
+						            <nav id="breadcrumbs-container" aria-label="You Are Here :">
+							            <span role="list">
+<span role="listitem">
+	<a href="https://www.arlingtonva.us/Home"  lang="en-US">Home</a>
+	<span class="nav-separator" aria-hidden="true" role="presentation">/</span>
+</span>
+          <span role="listitem"><a href="https://www.arlingtonva.us/Government" >Government</a><span class='nav-separator' aria-hidden="true" role="presentation">/</span></span><span role="listitem">
+	<a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups" >
+		Commissions and Advisory Groups
+	</a>
+	<span class='nav-separator' aria-hidden="true" role="presentation">/</span>
+</span>
+<span class="current-page" role="listitem" aria-current="page" >Board of Zoning Appeals (BZA)</span>
+          </span>
+						            </nav>
+					            </div>
+                      
+					            <div class="col-xs-12">
+						            <div class="main-inner-container">
+							            <div id="main-content" class="main-container clearfix">
+							              
+                            <!-- OC Layout Element Conent Template -->
+							              <!--normalTemplateStart--><div class="grid">
+    <div class="col-xs-12 col-m-8">
+        <h1 class='oc-page-title '>Board of Zoning Appeals (BZA)</h1>
+        
+        
+        <p>BZA application deadlines are now available below, under 2026 Hearing Dates. The deadlines provide clarity to applicants about when their application will be heard by the BZA.</p>
+<p>The Arlington County Board of Zoning Appeals (BZA) has powers, duties, and procedures as set forth in broad terms in the Code of Virginia and in the&nbsp;<strong><a href="https://www.arlingtonva.us/Government/Programs/Building/Codes-Ordinances/Zoning" target="_self">Arlington County Zoning Ordinance</a></strong>, including:</p>
+<ul style="margin-left: 40px;">
+<li>Hearing and deciding upon applications for Use Permits for modifications to the requirements of the Zoning Ordinance regulating the placement of buildings and structures on single-family residential lots</li>
+<li>Hearing and deciding upon applications for Variances for relief from the requirements of the Zoning Ordinance regulating placement, bulk, height, and coverage of buildings and structures</li>
+<li>Hearing and deciding on applications to allow construction on lots which do not conform to the minimum required dimensional standards of the Zoning Ordinance</li>
+<li>Hearing and deciding appeals of administrative decisions of the Zoning Administrator made pursuant to the Zoning Ordinance</li>
+</ul>
+<p>Information about applications, submission requirements, and review processes are available:</p>
+<ul style="margin-left: 40px;">
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Submitting-Zoning-Appeals" target="_self">Zoning Appeals</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Use-Permits-Variances" target="_self">BZA Use Permits and Variances</a></li>
+</ul>
+<p>It is recommended to request a pre-application meeting with the BZA Coordinator ahead of submitting your application to discuss the review process and specifics to your case.</p>
+<h2>Public Hearings and Filing Dates</h2>
+<p>The BZA holds monthly public hearings to perform its appointed duties and conduct any other business as necessary. Any matter before the BZA for review must be duly advertised in accordance with the Code of Virginia.&nbsp; All application materials must be accepted as complete, with all associated fees paid, prior to the application being placed on the agenda for a particular BZA hearing.&nbsp;&nbsp; Please be advised that the typical timeframe between application submission and the BZA hearing is at least two (2) months. Any incomplete applications (including those with an outstanding fee) will be processed for the next available BZA hearing.</p>
+<p>Please note that while applications can be updated after they are accepted as complete, additional materials must be submitted at least two (2) weeks prior to the BZA hearing at which the case is scheduled to be heard in order to be considered in the staff report and recommendation prepared by Zoning Division staff for the BZA.&nbsp;&nbsp;</p>
+<p>Staff highly recommends that all applicants (especially those that have questions about their application, and/or those that have not previously submitted a BZA application) contact the BZA Coordinator to set up a pre-application meeting to discuss their request prior to submitting their application.&nbsp;</p>
+<h5>2026/Early 2027 Hearing Dates</h5>
+<p>All BZA meeting are held at 7:00pm unless otherwise noted.&nbsp;</p>
+<p>Links to available application materials for individual cases are available through the meeting agenda.&nbsp;</p>
+<ul>
+<li><strong>Preliminary Deadline:</strong> date by which applications must be submitted. Staff will review your application for completeness.</li>
+<li><strong>Final Deadline</strong>: date by which all revisions must be completed and fees paid for the item to be added to the agenda for the associated monthly BZA meeting.&nbsp;</li>
+</ul>
+<table style="border-style: solid; border-width: 2px; border-color: rgb(165,165,165);" class="sc-responsive-table">
+<thead>
+<tr>
+<th style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;" class="">Meeting Date &amp; Agenda</th>
+<th style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">Preliminary Application Deadline&nbsp;</th>
+<th style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">Final Application Deadline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;January 21, 2026</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;November 12, 2025</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;November 26, 2025&nbsp;</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;February 18, 2026</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;December 10, 2025</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">December 24, 2025&nbsp;</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">
+<p>&nbsp;March 10, 2026</p>
+<p><em>(Cancelled due to lack of quorum)</em></p>
+</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">
+<p>&nbsp;March 18, 2026</p>
+</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;January 7, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;January 21, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;April 15, 2026</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;February 4, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;February 18, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;May 20, 2026</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;March 11, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;March 25, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;June 10, 2026</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;April 1, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;April 15, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;July 15, 2026</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;May 6, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;May 20, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">
+<p>September 16, 2026</p>
+</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;July 8, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;July 22, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">
+<p><strong>&nbsp;October 21, 2026:</strong> <a href="https://meetings.arlingtonva.us/BZA/Meetings/ViewMeeting?id=2800&amp;doctype=1">Agenda</a></p>
+<ul>
+<li><a href="https://teams.microsoft.com/meet/26694258781157?p=ttZ0fms0RyHI127NZy">Join the meeting now</a></li>
+<li>Dial in by phone: +1 347-973-6905</li>
+<li>Phone Conference ID:&nbsp;870 324 765#</li>
+</ul>
+</td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;August 12, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;August 26, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;"><strong>&nbsp;November 18, 2026</strong></td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;September 9, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;September 23, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;<strong>December 16, 2026</strong></td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;October 7, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;October 21, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;<strong>January 20, 2027</strong></td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;November 11, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;November 25, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;<strong>February 17, 2027</strong></td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;December 9, 2026</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;December 23, 2026</td>
+</tr>
+<tr>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;<strong>March 17, 2027</strong></td>
+<td style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;January 6, 2027</td>
+<td class="" style="border-color: rgb(165,165,165); border-width: 2px; border-style: solid;">&nbsp;January 20, 2027</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<p>*BZA work session for administrative matters; no requests for BZA use permits, variances, and/or appeals to be heard on this date.</p>
+<p>**BZA has also adopted carryover dates for each month.</p>
+<p><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Past-Minutes" class="styled-button-calltoaction">View past meeting materials</a></p>
+<h2>How to View and Participate in a Hybrid BZA Hearing</h2>
+<p>BZA hearings are hybrid meetings where members of the public may attend in-person or via electronic communications using Microsoft Teams.&nbsp;</p>
+<p>Commission members, staff, and applicants will conduct the hearings in a hybrid environment at the Bozman Government Center, 2100 Clarendon Boulevard, Room 307, County Board Room.&nbsp;</p>
+<ul style="margin-left: 40px;">
+<li>Board members, staff, applicants, and public testimony will be hosted by teleconference/ videoconference via Microsoft Teams. Participants will receive an email with further instruction.</li>
+<li>A recording of the meeting will be posted to the&nbsp;County website&nbsp;within two business days after the meeting.</li>
+</ul>
+<p>The public can participate by sharing live verbal testimony or written comments in advance:</p>
+<ul style="margin-left: 40px;">
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Speaker" target="_self">Sign-up online to speak</a>&nbsp;during the public hearing by 12:00 p.m. on the day of the hearing.
+<ul style="margin-left: 40px;">
+<li>In-person registration will be available.</li>
+<li>Registered speakers will receive an email with further instruction.</li>
+<li>Speakers will join the meeting via Microsoft Teams (accessible through a web browser or the free app) or via a phone line to provide their comments.</li>
+<li>To register by phone, contact the BZA Coordinator at&nbsp;<a href="tel:7032280798">703-228-0798</a> by 12:00 p.m. the day of the hearing.</li>
+</ul>
+</li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Comments" target="_self">Submit written comments online</a>&nbsp;to the BZA. Comments received by 5:00 p.m. the day prior to the hearing will be provided to the BZA in advance of the public hearing by the BZA Coordinator.</li>
+</ul>
+<p>To request translation services or reasonable accommodations, or for other questions, contact the BZA Coordinator, Lindsey Klein: <a href="mailto:lklein@arlingtonva.us">lklein@arlingtonva.us</a>;&nbsp;<a href="tel:7032280798">703-228-0798</a>.</p>
+
+
+      
+        
+    </div>
+    
+        <div class="col-xs-12 col-m-4">
+            <div class="side-box consultation-snapshot">
+		
+			<h2 class="side-box-title">
+				Quick Links
+			</h2>
+		
+		
+		<div class="side-box-content">
+			<div class="side-box-section body-content">
+				<p><ul>
+<li><a href="https://meetings.arlingtonva.us/BZA" target="_blank">BZA Meeting Materials</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Past-Minutes">BZA Meeting Minutes</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Members">BZA Members</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Speaker" target="_self">Sign Up to Speak at a BZA Hearing</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Comments" target="_self">Submit Written Comments to the BZA</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Submitting-Zoning-Appeals" target="_self">Zoning Appeals</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals/Use-Permits-Variances" target="_self">BZA Use Permits and Variances</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Programs/Building/Permits/Use-Permits" target="_self">County Board Use Permits</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Programs/Building/Permits">Permits and Applications</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Programs/Building/Codes-Ordinances/Zoning" target="_self" style="font-family: inherit; font-size: 1em;">Zoning Ordinance</a></li>
+<li><a href="https://www.arlingtonva.us/Government/Programs/Building/Permits/Fee-Schedules" target="_self" style="font-family: inherit; font-size: 1em;">Zoning Fee Schedule</a></li>
+</ul>
+
+</p>
+
+
+			</div>
+		</div>
+		
+	</div><div class="side-box consultation-snapshot">
+		
+			<h2 class="side-box-title">
+				Contact
+			</h2>
+		
+		
+		<div class="side-box-content">
+			<div class="side-box-section body-content">
+				<p><p><strong>Lindsey Klein</strong><br />
+<a href="mailto:lklein@arlingtonva.us">lklein@arlingtonva.us</a><br />
+<a href="tel:7032280798">703-228-0798</a></p>
+<p><a href="http://voice.google.com/calls?a=nc,%2B17032280798" class="gv-tel-link" target="_blank" rel="noopener" title="Call +1 703-228-0798 via Google Voice"></a></p>
+<p><strong>Zoning Administration</strong><br />
+2100 Clarendon Blvd,10th Floor<br />
+Arlington, VA 22201<br />
+<a href="mailto:contactzoning@arlingtonva.us">contactzoning@arlingtonva.us</a><br />
+<a href="tel:7032283883">703-228-3883</a><a href="http://voice.google.com/calls?a=nc,%2B17032283883" class="gv-tel-link" target="_blank" rel="noopener" title="Call +1 703-228-3883 via Google Voice"></a><a href="http://voice.google.com/calls?a=nc,%2B17032283883" class="gv-tel-link" target="_blank" rel="noopener" title="Call +1 703-228-3883 via Google Voice"></a><a href="http://voice.google.com/calls?a=nc,%2B17032283883" class="gv-tel-link" target="_blank" rel="noopener" title="Call +1 703-228-3883 via Google Voice"></a><a href="http://voice.google.com/calls?a=nc,%2B17032283883" class="gv-tel-link" target="_blank" rel="noopener" title="Call +1 703-228-3883 via Google Voice"></a><a href="http://voice.google.com/calls?a=nc,%2B17032283883" class="gv-tel-link" target="_blank" rel="noopener" title="Call +1 703-228-3883 via Google Voice"></a></p>
+<p><em><a href="https://www.twitter.com/planArlingtonVA" target="_blank" aria-describedby="new-window-0"><img alt="Twitter Logo" src="https://www.arlingtonva.us/files/sharedassets/public/social-links/twitter-circle.png?w=26&amp;h=26" /></a>&nbsp;</em></p>
+
+</p>
+
+
+			</div>
+		</div>
+		
+	</div><div class="side-box consultation-snapshot">
+		
+			<h2 class="side-box-title">
+				Events
+			</h2>
+		
+		
+		<div class="side-box-content">
+			<div class="side-box-section body-content">
+				<p><div class="oc-quick-list oc-quick-list-special oc-quick-list-event-1 clearfix"><div class="grid"><div class="list-container events-list-container left" role="list"><div class="list-item-container homepage-show" role="listitem">	
+	<article>
+		<a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Shared-Content/Commissions-BZA-Upcoming-Public-Hearings/Board-of-Zoning-Appeals-Hearing-2026"  target="">
+			<H2 class="list-item-title">Board of Zoning Appeals (BZA) Hearing (Hybrid)</H2>		
+			
+			<p class="clearfix">
+				<span class="list-item-block-date"><span class="part-date">21</span>
+<span class="part-month">Oct</span>
+<span class="part-year">2026</span></span>
+				<span class="list-item-block-desc">
+				The Arlington County Board of Zoning Appeals (BZA) has powers, duties, and procedures as set forth in broad terms in the Code of Virginia and in the Arlington County Zoning Ordinance
+				</span>
+			</p>
+			<p class="list-item-address">2100 Clarendon Boulevard, Room 307,&nbsp;Arlington, VA&nbsp;22201</p>
+			<p class="published-on small-text">2 more dates</p>
+			<p class="tagged-as-list">
+	<span class='label'>Related&nbsp;</span><span class="text"><span class="separator">,&nbsp;</span>Advisory Groups & Commissions<span class="separator">,&nbsp;</span>Public Meeting<span class="separator">,&nbsp;</span>Adults</span></p>
+		</a>
+	</article>
+</div></div></div></div></p>
+
+
+			</div>
+		</div>
+		
+	</div><div class="side-box consultation-snapshot">
+		
+			<h2 class="side-box-title">
+				Subscribe
+			</h2>
+		
+		
+		<div class="side-box-content">
+			<div class="side-box-section body-content">
+				<p><div><link href="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/css/app.6b51d027.css" rel="preload" as="style">
+<link href="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/css/chunk-vendors.facc1876.css" rel="preload" as="style">
+<link href="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/js/app.df19babc.js" rel="preload" as="script">
+<link href="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/js/chunk-vendors.94d3a65f.js" rel="preload" as="script">
+<link href="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/css/chunk-vendors.facc1876.css" rel="stylesheet">
+<link href="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/css/app.6b51d027.css" rel="stylesheet">
+<div id="app"></div>
+<script src="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/js/chunk-vendors.94d3a65f.js"></script>
+<script src="https://arlopencities.blob.core.windows.net/govdelivery/subscriptions/js/app.df19babc.js"></script></div>
+
+</p>
+
+
+			</div>
+		</div>
+		
+	</div><div class="side-box consultation-snapshot">
+		
+			<h2 class="side-box-title">
+				Get Involved 
+			</h2>
+		
+		
+		<div class="side-box-content">
+			<div class="side-box-section body-content">
+				<p><p><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups" target="_self">About Groups &amp; Commissions</a><br />
+<a href="/files/sharedassets/public/v/1/commissions/images/advisory_org_chart_external.jpg" target="_blank" class="document ext-jpg"><i aria-hidden="true"></i>Visual Overview<span class="file-info">(JPG,&nbsp;2MB)</span></a></p>
+<p><a href="https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Advisory-Group-Application" target="_self"><span class="styled-button">Apply Now</span></a></p>
+
+</p>
+
+
+			</div>
+		</div>
+		
+	</div>
+            
+        </div>
+    
+    
+</div><!--normalTemplateEnd-->
+                            
+                            
+                            
+							            </div>
+						            </div>
+					            </div>
+                        
+                            </div>
+                        </div>
+                        <div class="back-to-top-container text-center">
+                            <a href="#body-top" id="back-to-top"><i aria-hidden="true"></i><span class="js-visuallyhidden">Back to top</span></a>
+                        </div>
+                </div>
+            </div><!--groupTemplateEnd-->
+            <footer>
+                
+                    <div class="footer-outer-container footer-first-row">
+                        <div class="footer-container clearfix">
+                            <div class="grid grid-pad">
+                                <div class="col-xs-12 col-s-12 col-m-6 col-lg-3" >
+	
+			<h2 class="visuallyhidden">Site Footer</h2>
+			<h3 class="footer-title">CONTACT US</h3>
+			
+	<p><span style="font-size: 115%;"><strong>Main Address</strong><br />
+<a href="https://www.arlingtonva.us/Venues/Locations/Bozman-Government-Center" style="font-family: inherit; font-size: 115%;">Ellen M. Bozman Government Center</a><br />
+<span style="font-size: 115%; font-family: inherit; color: inherit;">2100 Clarendon Blvd., Arlington, VA 22201&nbsp;</span><a href="https://www.google.com/maps?q=2100+Clarendon+Blvd.++Arlington,+VA+22201" style="font-size: 115%; font-family: inherit;"><span style="text-decoration: underline;">View Map</span></a></span></p>
+<p><span style="font-size: 115%;"><a href="https://www.arlingtonva.us/Venues/Locations"><span style="text-decoration: underline;">View other County government locations</span></a>.</span></p>
+<p><span style="font-size: 115%;">Questions? Need help? <a href="https://www.arlingtonva.us/Home/Contact-Arlington"><span style="text-decoration: underline;"><strong>Contact the County and learn who to call</strong></span></a>.</span></p>
+
+
+	<ul class="footer-links without-icons ">   </ul>
+	<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</div><div class="col-xs-12 col-s-12 col-m-6 col-lg-2" >
+	
+			<h2 class="visuallyhidden">Site Footer</h2>
+			<h3 class="footer-title">QUICK LINKS</h3>
+			
+	<p><span style="font-size: 115%;"><a href="https://www.arlingtonva.us/About-Arlington">About Arlington</a><br />
+<a href="https://www.arlingtonva.us/A-Z-Index" style="font-family: inherit;">A-Z Directory</a><br />
+<a href="https://www.arlingtonva.us/Government/Topics/Report-Problem" target="_self" style="font-family: inherit;">Request Service</a><br />
+<a href="https://arlingtonva.qscend.com/311/request/add">Report a Problem</a><br />
+<a href="https://www.arlingtonva.us/Government/Departments/CMO/Common-Constituent-Questions">Common Questions</a><br />
+<a href="https://fa-exkk-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1">Jobs</a><br />
+<a href="https://capp.arlingtonva.us/" target="_blank" style="font-family: inherit;">Payments</a><br />
+<a href="https://www.arlingtonva.us/Government/Programs/FOIA">FOIA Requests</a><br />
+<a href="https://www.arlingtonva.us/Government/For-Employees" style="font-family: inherit;">For Employees</a><br />
+<a href="https://www.arlingtonva.us/Home/Accessibility">Accessibility</a></span></p>
+
+
+	<ul class="footer-links with-icons ">   </ul>
+	
+</div><div class="col-xs-12 col-s-12 col-m-6 col-lg-4" >
+	
+			<h2 class="visuallyhidden">Site Footer</h2>
+			<h3 class="footer-title">STAY INFORMED</h3>
+			
+	<p><span style="font-size: 115%;"><a href="https://www.arlingtonva.us/About-Arlington/Newsroom/Subscribe"><span style="text-decoration: underline;">Sign up for&nbsp;<strong>Inside Arlington</strong></span></a>, the County&rsquo;s weekly newsletter, to get updates and information on projects, feedback opportunities, events, and more.</span></p>
+<p><a href="https://www.facebook.com/ArlingtonVA"><img alt="facebook" src="/files/assets/public/v/1/homepage-images/social-media-footer-icons-facebook-white_large.png?w=50&amp;h=50" /></a>&nbsp; &nbsp; &nbsp;<a href="https://www.instagram.com/arlingtoncountyva/"><img alt="instagram" src="/files/assets/public/v/1/homepage-images/social-media-footer-icons-instagram-white_large.png?w=50&amp;h=50" /></a>&nbsp; &nbsp; &nbsp;<a href="https://x.com/arlingtonva"><img alt="x" src="/files/assets/public/v/1/homepage-images/social-media-footer-icons-x-white-13_large.png?w=50&amp;h=50" /></a>&nbsp; &nbsp; &nbsp;<a href="https://bsky.app/profile/arlingtonva.us"><img alt="social-media-footer-icons-bluesky.png" src="/files/assets/public/v/1/homepage-images/social-media-footer-icons-bluseky.png?w=50&amp;h=50" /></a>&nbsp; &nbsp; &nbsp;</p>
+<p><a href="https://www.youtube.com/user/arlingtoncounty"><img alt="youtube" src="/files/assets/public/v/1/homepage-images/social-media-footer-icons-youtube-white_large.png?w=50&amp;h=50" /></a>&nbsp; &nbsp; &nbsp;<a href="https://nextdoor.com/agency-detail/va/arlington/arlington-county/"><img alt="nextdoor" src="/files/assets/public/v/1/homepage-images/new-nextdoor-logo-white-social-media-icons-16.png" style="width: 50px;" /></a>&nbsp; &nbsp; &nbsp;<a href="https://www.linkedin.com/company/arlington-county-government/posts/?feedView=all"><img alt="LinkedIn White Social Media Icon" src="/files/assets/public/v/1/homepage-images/white-social-media-icons/linkedin-white-social-media-icon.png" style="width: 50px;" /></a></p>
+
+
+	<ul class="footer-links with-icons ">   </ul>
+	<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+</div><div class="col-xs-12 col-s-12 col-m-12 col-lg-2" >
+	
+	<div style="text-align: center;"><img alt="Logo Arlington County Virginia" src="/files/sharedassets/public/v/1/countylogo_reverse_vertical.png" style="width: 175px; height: 141px; vertical-align: middle; margin-right: 20px; margin-bottom: 10px;" title="Arlington County Logo" /></div>
+
+
+	
+	
+</div>
+                            </div>
+                        </div>
+                    </div>
+                
+                <div class="footer-outer-container footer-second-row">
+                    <div class="footer-container clearfix">
+                        <div class="grid grid-pad footer-secondary-links">
+                            <div class="col-xs-12 col-m-7">
+                                
+                                    <div><a href="https://www.arlingtonva.us/" target="_blank"  >County Homepage</a>&nbsp;| <a href="https://www.arlingtonva.us/Home/Terms-Conditions" target="_self"  >Terms & Conditions</a>&nbsp;| <a href="https://www.arlingtonva.us/Government/For-Employees" target="_self"  >For Employees</a>&nbsp;| <a href="https://www.arlingtonva.us/Home/Contact-Arlington" target="_self"  >Contact Arlington</a></div>
+                                
+                            </div>
+                            <div class="col-xs-12 col-m-5 powered-by">
+                                <div class="right">
+                                    &copy; 2026 Arlington County Virginia&nbsp;|&nbsp;<span class="powered-by">Powered by <a href="https://granicus.com/solution/govaccess/opencities/" target="_blank">Granicus</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="/files/oc-resources/b9015858-988c-48a4-9473-7c193df083e4/JsTextSnippets.js?ocsvclang=en-US" type="text/javascript"></script><script></script>
+    
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WSS6P22"
+height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script src="/files/84188c30-380e-4a77-8d0d-ebd11cea625c/chat-widget.js"></script>
+    <!-- Monsido tag -->
+<script type="text/javascript">
+    window._monsido = window._monsido || {
+        token: "0PlvMIlNxuQzsdK0FvDuhw",
+        heatmap: {
+            enabled: true,
+        },
+        pageCorrect: {
+            enabled: true,
+        },
+        pageAssistV2: {
+            enabled: true,
+            theme: "light",
+            mainColor: "#783CE2",
+            textColor: "#ffffff",
+            linkColor: "#783CE2",
+            buttonHoverColor: "#783CE2",
+            mainDarkColor: "#052942",
+            textDarkColor: "#ffffff",
+            linkColorDark: "#FFCF4B",
+            buttonHoverDarkColor: "#FFCF4B",
+            greeting: "Discover your personalization options",
+            direction: "leftbottom",
+            coordinates: "   ",
+            iconShape: "circle",
+            title: "Personalization Options",
+            titleText: "Welcome to PageAssist™ toolbar! Adjust the options below to cater the website to your accessibility needs.",
+            iconPictureUrl: "logo",
+            logoPictureUrl: "",
+            logoPictureBase64: "",
+            languages: ["en-US"],
+            defaultLanguage: "en-US",
+            skipTo: true,
+            alwaysOnTop: false,
+        },
+    };
+</script>
+<script type="text/javascript" async src="https://app-script.monsido.com/v2/monsido-script.js"></script>
+<!-- end Monsido tag -->
+    
+    
+
+<script type="text/javascript">
+//<![CDATA[
+window.__TsmHiddenField = $get('ctl04_seamless_script_manager_TSM');//]]>
+</script>
+</form>
+</body>
+</html>

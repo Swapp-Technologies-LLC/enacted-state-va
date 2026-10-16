@@ -1,0 +1,8 @@
+zoning_office:
+  office: "Department of Planning & Zoning"
+  phone: "703.746.4666"
+  web: "https://www.alexandriava.gov/Planning"
+  source_url: "https://www.alexandriava.gov/Planning"
+  source_sha256: "1bf0c43e885b12bb6831c6e8bb6d8043f93113325f5c34385153e7a6a5aef76b"
+  source_fetched_at: "2026-10-16T06:57:03.830769+00:00"
+  quoted_sentence: "Questions? Contact the Department of Planning & Zoning at 703.746.4666"

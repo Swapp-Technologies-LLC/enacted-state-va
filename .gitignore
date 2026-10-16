@@ -1,6 +1,9 @@
 # Cache & artifacts
 .cache/*
 !.cache/98e67321fd5d5f2b2605c7dff67d0b234758529823786f7e266b97214537a7b2.html
+!.cache/17b0f015bf064b923ab64d859a0414b49dba8355283a5b3b29fc5329aade89ad.html
+!.cache/1bf0c43e885b12bb6831c6e8bb6d8043f93113325f5c34385153e7a6a5aef76b.html
+!.cache/7a9f69c069bb748f6e81294ca835b681efafba21d216a4e591aebaa4b2ad9276.html
 __pycache__/
 *.py[cod]
 

@@ -1,0 +1,9 @@
+zoning_office:
+  office: "Zoning Administration"
+  phone: "703-228-3883"
+  email: "contactzoning@arlingtonva.us"
+  web: "https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals"
+  source_url: "https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Board-Zoning-Appeals"
+  source_sha256: "17b0f015bf064b923ab64d859a0414b49dba8355283a5b3b29fc5329aade89ad"
+  source_fetched_at: "2026-10-16T06:57:03.152009+00:00"
+  quoted_sentence: "Zoning Administration 2100 Clarendon Blvd,10th Floor Arlington, VA 22201 contactzoning@arlingtonva.us 703-228-3883"

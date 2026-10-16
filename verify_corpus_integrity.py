@@ -23,6 +23,111 @@ import hashlib
 import subprocess
 from datetime import datetime, date
 import urllib.request
+import html
+
+def validate_authority_data(auth_data: dict, jur_name: str, cache_dir: str) -> list:
+    """
+    Validates authority.yaml data dictionary according to Slice A1 rules:
+    - Required key zoning_office must be present and have all non-optional fields.
+    - If legislative_body is present, all non-optional fields must be present.
+    - For each block present:
+      - .cache/<source_sha256>.html must exist.
+      - sha256 of saved file must match source_sha256.
+      - office, phone, and quoted_sentence must each appear in the page text.
+      - If email is present, it must appear in the normalized page text.
+      - If quoted_sentence does not contain the phone number, fail.
+    Returns list of error messages (empty if valid).
+    """
+    errors = []
+    REQUIRED_FIELDS = [
+        "office", "phone", "web", "source_url", "source_sha256", "source_fetched_at", "quoted_sentence"
+    ]
+    if not isinstance(auth_data, dict):
+        return [f"{jur_name}: authority.yaml content is not a mapping"]
+
+    if "zoning_office" not in auth_data:
+        errors.append(f"{jur_name}: missing required section 'zoning_office'")
+
+    blocks = []
+    if "zoning_office" in auth_data:
+        blocks.append(("zoning_office", auth_data.get("zoning_office")))
+    if "legislative_body" in auth_data:
+        blocks.append(("legislative_body", auth_data.get("legislative_body")))
+
+    for block_name, block_data in blocks:
+        if not isinstance(block_data, dict):
+            errors.append(f"{jur_name}.{block_name}: section is not a mapping")
+            continue
+        for field in REQUIRED_FIELDS:
+            val = block_data.get(field)
+            if val is None or str(val).strip() == "":
+                errors.append(f"{jur_name}.{block_name}: missing required field '{field}'")
+
+        sha = str(block_data.get("source_sha256", "")).strip()
+        if not sha:
+            continue
+        cached_file = os.path.join(cache_dir, f"{sha}.html")
+        if not os.path.isfile(cached_file):
+            errors.append(f"{jur_name}.{block_name}: cached file .cache/{sha}.html does not exist")
+            continue
+        try:
+            with open(cached_file, "rb") as cf:
+                raw_bytes = cf.read()
+        except Exception as e:
+            errors.append(f"{jur_name}.{block_name}: could not read .cache/{sha}.html: {e}")
+            continue
+
+        actual_sha = hashlib.sha256(raw_bytes).hexdigest()
+        if actual_sha.lower() != sha.lower():
+            errors.append(f"{jur_name}.{block_name}: sha256 mismatch for .cache/{sha}.html (expected {sha}, got {actual_sha})")
+            continue
+
+        raw_text = raw_bytes.decode("utf-8", errors="ignore")
+        norm_raw = html.unescape(raw_text).replace('\u2011', '-').replace('\xa0', ' ')
+        clean_raw = ' '.join(re.sub(r'<[^>]+>', ' ', norm_raw).split())
+
+        def _appears(target_str):
+            if not target_str:
+                return True
+            norm_target = str(target_str).replace('\u2011', '-').replace('\xa0', ' ')
+            clean_target = ' '.join(norm_target.split())
+            return clean_target in clean_raw
+
+        office = block_data.get("office")
+        if office and not _appears(office):
+            errors.append(f"{jur_name}.{block_name}.office: '{office}' does not appear in cached page text")
+
+        phone = block_data.get("phone")
+        if phone and not _appears(phone):
+            errors.append(f"{jur_name}.{block_name}.phone: '{phone}' does not appear in cached page text")
+
+        quoted = block_data.get("quoted_sentence")
+        if quoted and not _appears(quoted):
+            errors.append(f"{jur_name}.{block_name}.quoted_sentence: '{quoted}' does not appear in cached page text")
+
+        if phone and quoted:
+            norm_quoted = str(quoted).replace('\u2011', '-').replace('\xa0', ' ')
+            norm_phone = str(phone).replace('\u2011', '-').replace('\xa0', ' ')
+            if ' '.join(norm_phone.split()) not in ' '.join(norm_quoted.split()):
+                errors.append(f"{jur_name}.{block_name}.quoted_sentence: does not contain phone '{phone}'")
+
+        email = block_data.get("email")
+        if email:
+            if not _appears(email):
+                errors.append(f"{jur_name}.{block_name}.email: '{email}' does not appear in cached page text")
+
+    return errors
+
+def validate_authority_file(file_path: str, cache_dir: str) -> list:
+    if not os.path.isfile(file_path):
+        return [f"{file_path}: file does not exist"]
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+    except Exception as e:
+        return [f"{file_path}: YAML parse error: {e}"]
+    jur_name = os.path.basename(os.path.dirname(os.path.abspath(file_path)))
+    return validate_authority_data(data, jur_name, cache_dir)
 
 try:
     import pdfplumber
@@ -434,9 +539,29 @@ def main():
     else:
         print("  ✓ Zero forbidden strings found across all staged files.")
 
+    # -------------------------------------------------------------
+    # GATE 9: Verified "Who To Ask" Authority Contacts Gate (Slice A1)
+    # -------------------------------------------------------------
+    print("\n[GATE 9] Verified 'Who To Ask' Authority Contacts Gate (Slice A1):")
+    covered_va_jurisdictions = ["arlington", "fairfax_county", "alexandria"]
+    cache_dir = os.path.join(REPO_ROOT, ".cache")
+    for jur in covered_va_jurisdictions:
+        auth_file = os.path.join(REPO_ROOT, jur, "authority.yaml")
+        if not os.path.isfile(auth_file):
+            print(f"  FAIL: Covered jurisdiction '{jur}' is missing authority.yaml!")
+            failed_checks += 1
+            continue
+        errs = validate_authority_file(auth_file, cache_dir)
+        if errs:
+            for err in errs:
+                print(f"  FAIL: {err}")
+                failed_checks += 1
+        else:
+            print(f"  ✓ {jur}: Verified authority.yaml contact integrity.")
+
     print("\n===============================================================")
     if failed_checks == 0:
-        print(f"  ALL 8 CORPUS INTEGRITY VERIFICATION GATES PASSED! ✅ ({repo_name})")
+        print(f"  ALL 9 CORPUS INTEGRITY VERIFICATION GATES PASSED! ✅ ({repo_name})")
         print("===============================================================\n")
         sys.exit(0)
     else:
