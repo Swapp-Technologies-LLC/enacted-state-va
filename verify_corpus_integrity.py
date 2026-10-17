@@ -496,17 +496,24 @@ def main():
     # -------------------------------------------------------------
     print("\n[GATE 8] Publication Readiness & Staging Cleanliness:")
     lic_path = os.path.join(REPO_ROOT, "LICENSE")
-    if not os.path.exists(lic_path):
-        print("  FAIL: LICENSE missing.")
+    lic_data_path = os.path.join(REPO_ROOT, "LICENSE-DATA")
+    # Founder ruling 2026-10-17: records CC0 1.0 (LICENSE-DATA), code MIT (LICENSE).
+    if not os.path.exists(lic_path) or not os.path.exists(lic_data_path):
+        print("  FAIL: LICENSE (MIT, code) or LICENSE-DATA (CC0 1.0, records) missing.")
         failed_checks += 1
     else:
         with open(lic_path, "r", encoding="utf-8") as f:
-            lic = f.read().strip()
-        if lic != "[FOUNDER: license ruling pending — CC0 proposed]":
-            print(f"  FAIL: LICENSE has unexpected content: {lic}")
+            lic = f.read()
+        with open(lic_data_path, "r", encoding="utf-8") as f:
+            lic_data = f.read()
+        if not lic.startswith("MIT License") or "Copyright (c) 2026 Swapp Technologies LLC" not in lic:
+            print("  FAIL: LICENSE is not the MIT licence with the Swapp Technologies LLC notice.")
+            failed_checks += 1
+        elif "CC0 1.0 Universal" not in lic_data:
+            print("  FAIL: LICENSE-DATA is not the CC0 1.0 Universal legal code.")
             failed_checks += 1
         else:
-            print("  ✓ LICENSE contains exact founder placeholder.")
+            print("  ✓ LICENSE is MIT (code) and LICENSE-DATA is CC0 1.0 (records).")
 
     readme_path = os.path.join(REPO_ROOT, "README.md")
     if not os.path.exists(readme_path):
@@ -521,6 +528,11 @@ def main():
             failed_checks += 1
         else:
             print("  ✓ README.md carries exact statutory posture line.")
+        if "LICENSE-DATA" not in readme or "CC0 1.0" not in readme or "MIT" not in readme:
+            print("  FAIL: README.md does not say which files are CC0 1.0 and which are MIT.")
+            failed_checks += 1
+        else:
+            print("  ✓ README.md names both licences and what each covers.")
 
     forbidden_hits = 0
     binary_extensions = ('.pdf', '.bin', '.png', '.jpg', '.jpeg', '.gif', '.ico', '.woff', '.woff2', '.ttf', '.pyc')
