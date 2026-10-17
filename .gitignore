@@ -1,4 +1,4 @@
+# Cache & artifacts
 .cache/
 __pycache__/
-*.pyc
-.DS_Store
+*.py[cod]
