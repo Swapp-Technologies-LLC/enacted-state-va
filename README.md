@@ -22,6 +22,19 @@ Nothing here is legal advice, and using it does not create an attorney-client re
 
 Browse these records on **[enacted.app](https://enacted.app/coverage/)**, or follow a county or city by feed at **[enacted.app/feeds](https://enacted.app/feeds/)**. Both are free.
 
+## Contents
+
+- [What's in it](#whats-in-it)
+- [Coverage](#coverage)
+  - [Water](#water)
+  - [Zoning and land use](#zoning-and-land-use)
+- [How a record is made](#how-a-record-is-made)
+- [Checking the records yourself](#checking-the-records-yourself)
+- [Reuse and licences](#reuse-and-licences)
+- [Corrections](#corrections)
+- [About](#about)
+
+
 ## What's in it
 
 | Path | What it holds |
@@ -37,7 +50,28 @@ Browse these records on **[enacted.app](https://enacted.app/coverage/)**, or fol
 
 ## Coverage
 
-3 of the 9 Northern Virginia jurisdictions tracked here have records. Independent cities are jurisdictions in their own right. The [coverage page](https://enacted.app/coverage/) shows the same thing on a map.
+Each topic below has a short summary and the full list in a dropdown. The [coverage page](https://enacted.app/coverage/) shows the same thing on a map.
+
+### Water
+
+Arlington County Department of Environmental Services' published lead and copper results at customer taps.
+
+<details>
+<summary>All 2 water records</summary>
+
+| Water system | Utility | Serves | Parameter | Period | Record |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| Willston Zone | Arlington County DES | Arlington County | Copper | 2022 | [record](water/measurements/arlington_des/copper_tap_2024.md) |
+| Willston Zone | Arlington County DES | Arlington County | Lead | 2022 | [record](water/measurements/arlington_des/lead_tap_2024.md) |
+
+</details>
+
+### Zoning and land use
+
+3 of the 9 Northern Virginia jurisdictions tracked here have records. Independent cities are jurisdictions in their own right.
+
+<details>
+<summary>All 9 jurisdictions</summary>
 
 | Jurisdiction | Folder | Status |
 | :-- | :-- | :-- |
@@ -51,7 +85,8 @@ Browse these records on **[enacted.app](https://enacted.app/coverage/)**, or fol
 | City of Manassas Park | [`manassas_park/`](manassas_park/) | Not covered yet: code published only on Municode ([details](manassas_park/SOURCING_BLOCKED.md)) |
 | Prince William County | [`prince_william/`](prince_william/) | Not covered yet: code published only on Municode ([details](prince_william/SOURCING_BLOCKED.md)) |
 
-Water systems with records: Arlington County Department of Environmental Services (`arlington_des`).
+</details>
+
 
 Records are added and refreshed by deterministic fetch scripts run by hand. Scheduled fetch-and-check workflows are staged in `.github/workflows-pending/` and are not switched on yet, so a change at the source appears here only after the next run.
 
