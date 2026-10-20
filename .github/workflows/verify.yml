@@ -1,0 +1,52 @@
+name: Verify Corpus Integrity & Publication Readiness
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Record Integrity & Gate Suite
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml feedparser beautifulsoup4 requests
+
+      - name: Restore PDF Cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/pdf_cache
+          key: ${{ runner.os }}-pdf-cache-${{ hashFiles('**/water/measurements/**/*.md') }}
+          restore-keys: |
+            ${{ runner.os }}-pdf-cache-
+
+      - name: Run Corpus Integrity Verification Suite
+        env:
+          ENACTED_USER_AGENT: "EnactedBot/1.0 (+https://enacted.app/bot/)"
+          PDF_CACHE_DIR: .cache/pdf_cache
+        run: |
+          python scripts/wording_gate.py
+          python verify_corpus_integrity.py

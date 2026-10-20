@@ -1,0 +1,18 @@
+sources:
+  - id: arlington_des_ccr
+    title: "Annual Water Quality Report"
+    index_url: "https://water.arlingtonva.us/"
+    content: "Annual drinking water quality compliance monitoring reports across Arlington County water zones."
+    cadence: annual
+    cadence_basis:
+      rule:
+        citation: "40 CFR § 141.152(b)"
+        quoted_sentence: "Each existing community water system must deliver reports according to § 141.155 by July 1 each year."
+    active: true
+    issue_pattern: "(?:{period}[-_ ]*(?:ccr|water[-_ ]*quality[-_ ]*report)|(?:ccr|water[-_ ]*quality[-_ ]*report)[-_ ]*{period})"
+    expected_by: "July 1 annually following compliance reporting period"
+    grace_days: 30
+    last_found:
+      title: "2024 Annual Water Quality Report"
+      url: "https://www.arlingtonva.us/files/sharedassets/public/v/1/water/documents/2024-ccr_willston_final_061725.pdf"
+      sha256: "5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53"

@@ -1,0 +1,117 @@
+name: Ingest · Drinking Water (Deterministic)
+
+on:
+  # Staggered daily UTC cron: water 07:05 UTC (offset 20 min)
+  # schedule:
+  #   # Disabled until /bot/ is live (sa06) and ig03 has run
+  #   - cron: '5 7 * * *'
+  workflow_dispatch:
+    inputs:
+      source:
+        description: 'Water source to check'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - arlington_des_ccr
+
+concurrency:
+  group: ingest-water-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  ingest-water:
+    name: Check Water Sources & Reports
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Mint Swapp Bot App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.SWAPP_BOT_APP_ID }}
+          private-key: ${{ secrets.SWAPP_BOT_PRIVATE_KEY }}
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml feedparser beautifulsoup4 requests
+
+      - name: Restore PDF Cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/pdf_cache
+          key: ${{ runner.os }}-pdf-cache-${{ hashFiles('**/water/measurements/**/*.md') }}
+          restore-keys: |
+            ${{ runner.os }}-pdf-cache-
+
+      - name: Run Deterministic Water Checks (Zero Model in Path)
+        id: water_check
+        env:
+          ENACTED_USER_AGENT: "EnactedBot/1.0 (+https://enacted.app/bot/)"
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SRC="${{ github.event.inputs.source || 'all' }}"
+          python scripts/check_water_sources.py --source "$SRC"
+
+      - name: Run Corpus Integrity & Publication Gates
+        id: gates
+        env:
+          PDF_CACHE_DIR: .cache/pdf_cache
+          ENACTED_USER_AGENT: "EnactedBot/1.0 (+https://enacted.app/bot/)"
+        run: |
+          python scripts/wording_gate.py
+          python verify_corpus_integrity.py
+
+      - name: Open Issue on Gate Failure
+        if: failure() && steps.gates.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "[Ingestion Alert] Water Verification Gate Red" \
+            --body "Verification gates failed following water source checks. PR creation halted. Inspect run logs." \
+            --label "ingestion-failure" || true
+
+      - name: Determine Timestamp
+        id: timestamp
+        run: |
+          echo "date=$(date -u +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "ts=$(date -u +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request (Never Direct to Main)
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          commit-message: "chore(ingest): automated water source report check [${{ steps.timestamp.outputs.date }}] (bot)"
+          committer: "swapp-bot[bot] <swapp-bot[bot]@users.noreply.github.com>"
+          author: "swapp-bot[bot] <swapp-bot[bot]@users.noreply.github.com>"
+          branch: "bot/ingest-water/${{ steps.timestamp.outputs.ts }}"
+          delete-branch: true
+          title: "chore(ingest): automated water source report check [${{ steps.timestamp.outputs.date }}]"
+          body: |
+            ### Automated Water Source Check
+            - **Provenance:** Checked primary water authority portals via deterministic checks.
+            - **Crawler Identity:** EnactedBot/1.0 (+https://enacted.app/bot/), honoring robots.txt and 5s host spacing.
+            - **Cryptographic Gate:** Any changed or new report saved under `.cache/pdf_cache/` with verified SHA-256.
+            - **Reviewed Slice Rule:** No measurement record was generated automatically. Writing water records remains a reviewed slice.
+            - **Source Health:** `status/sources.json` updated with reachability and failure tracking.
+            - **Cadence Invariant:** Absence alerts fire only from statutory/agency `cadence_basis` (ig08).
+            - **Integrity:** All verification gates passed before PR generation.
+            - **Merge Policy:** Auto-merge is OFF. Requires human review.
+          labels: "automated-ingest,needs-review"

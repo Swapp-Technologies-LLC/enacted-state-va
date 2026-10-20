@@ -178,7 +178,7 @@ BLOCKLISTED_DOMAINS = [
 IGNORE_DIRS = (
     "water", "docs", "scripts", "reports", "data", "feeds", "state_statutes",
     ".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__",
-    "tests", ".pytest_cache"
+    "tests", ".pytest_cache", "status"
 )
 
 def main():
@@ -196,7 +196,7 @@ def main():
 
     for root, dirs, files in os.walk(REPO_ROOT):
         parts = os.path.relpath(root, REPO_ROOT).split(os.sep)
-        if any(p in (".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__", "tests", ".pytest_cache") for p in parts):
+        if any(p in (".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__", "tests", ".pytest_cache", "status") for p in parts):
             continue
 
         if root != REPO_ROOT:

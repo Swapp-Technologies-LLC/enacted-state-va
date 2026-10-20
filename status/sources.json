@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "last_run": "2026-10-20T16:00:00Z",
+  "sources": {
+    "arlington_des_ccr": {
+      "consecutive_failures": 0,
+      "last_changed": "2026-09-20T17:40:58Z",
+      "last_reached": "2026-10-20T16:00:00Z",
+      "source_id": "arlington_des_ccr",
+      "status": "ok",
+      "url": "https://www.arlingtonva.us/files/sharedassets/public/v/1/water/documents/2024-ccr_willston_final_061725.pdf"
+    }
+  }
+}
