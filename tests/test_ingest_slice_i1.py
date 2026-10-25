@@ -99,7 +99,12 @@ class TestIngestSliceI1(unittest.TestCase):
         workflows_dir = REPO_DIR / ".github" / "workflows"
         workflow_files = list(workflows_dir.glob("*.yml")) + list(workflows_dir.glob("*.yaml"))
 
-        banned_terms = ["[FOUNDER:", "ENACTED_BOT_TOKEN", "hola-there", "firearms"]
+        banned_terms = [
+            "[FOUNDER:", "ENACTED_BOT_TOKEN", "hola-there", "firearms",
+            "actions/checkout@v4", "actions/setup-python@v5", "actions/cache@v4",
+            "actions/create-github-app-token@v1", "actions/upload-artifact@v4",
+            "peter-evans/create-pull-request@v6",
+        ]
         for wf_path in workflow_files:
             content = wf_path.read_text(encoding="utf-8")
 
@@ -112,7 +117,15 @@ class TestIngestSliceI1(unittest.TestCase):
             if "runs-on:" in content:
                 self.assertIn("runs-on: ubuntu-24.04", content, f"{wf_path.name} must use ubuntu-24.04 runner")
 
+            # Node-24 action pins (ig12)
+            self.assertIn("actions/checkout@v5", content, f"{wf_path.name} must use actions/checkout@v5")
+            self.assertIn("actions/setup-python@v6", content, f"{wf_path.name} must use actions/setup-python@v6")
+            self.assertIn("actions/cache@v5", content, f"{wf_path.name} must use actions/cache@v5")
+
             if wf_path.name.startswith("ingest-"):
+                self.assertIn("actions/create-github-app-token@v3", content, f"{wf_path.name} must use actions/create-github-app-token@v3")
+                self.assertIn("actions/upload-artifact@v6", content, f"{wf_path.name} must use actions/upload-artifact@v6")
+                self.assertIn("peter-evans/create-pull-request@v8", content, f"{wf_path.name} must use peter-evans/create-pull-request@v8")
                 self.assertIn("${{ secrets.SWAPP_BOT_APP_ID }}", content)
                 self.assertIn("${{ secrets.SWAPP_BOT_PRIVATE_KEY }}", content)
                 self.assertIn("swapp-bot[bot]", content)
