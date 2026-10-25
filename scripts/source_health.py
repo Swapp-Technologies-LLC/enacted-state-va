@@ -50,15 +50,108 @@ def load_source_health(status_path: Optional[Path] = None) -> Dict[str, Any]:
     }
 
 
-def save_source_health(health_data: Dict[str, Any], status_path: Optional[Path] = None):
-    """Saves source health data atomically to JSON."""
+def has_meaningful_change(baseline_data: Dict[str, Any], current_data: Dict[str, Any]) -> bool:
+    """
+    Checks if a meaningful change occurred between baseline and current health data:
+    - Status flipped (e.g. ok <-> unreachable)
+    - last_changed timestamp moved
+    - Sources added or removed
+    Timestamp-only changes (last_run, last_reached) do NOT count as meaningful.
+    """
+    b_sources = baseline_data.get("sources", {}) if isinstance(baseline_data, dict) else {}
+    c_sources = current_data.get("sources", {}) if isinstance(current_data, dict) else {}
+
+    if set(b_sources.keys()) != set(c_sources.keys()):
+        return True
+
+    for sid, c_info in c_sources.items():
+        b_info = b_sources.get(sid, {})
+        # Status flip (ok vs unreachable / error change)
+        b_status = b_info.get("status", "")
+        c_status = c_info.get("status", "")
+        if b_status != c_status:
+            return True
+
+        # last_changed moved
+        if b_info.get("last_changed") != c_info.get("last_changed"):
+            return True
+
+    return False
+
+
+def save_source_health(
+    health_data: Dict[str, Any],
+    status_path: Optional[Path] = None,
+    only_if_meaningful: bool = True,
+    step_summary_path: Optional[Path] = None,
+    artifact_path: Optional[Path] = None
+) -> bool:
+    """
+    Saves source health data atomically to status/sources.json only if meaningful changes occurred.
+    Always writes full current health (with timestamps) to artifact_path (sources-health.json)
+    and appends a markdown table to step_summary_path ($GITHUB_STEP_SUMMARY).
+    Returns True if status_path was updated, False if skipped due to no meaningful changes.
+    """
     p = status_path or DEFAULT_STATUS_PATH
-    p.parent.mkdir(parents=True, exist_ok=True)
-    temp_p = p.with_suffix(".tmp")
-    with open(temp_p, "w", encoding="utf-8") as f:
-        json.dump(health_data, f, indent=2, sort_keys=True)
-        f.write("\n")
-    shutil.move(str(temp_p), str(p))
+    repo_root = p.parent.parent if p.parent.name == "status" else Path(".")
+
+    # 1. Determine if we should update on-disk status/sources.json
+    should_save = True
+    if only_if_meaningful and p.exists():
+        try:
+            with open(p, "r", encoding="utf-8") as f:
+                disk_data = json.load(f)
+            should_save = has_meaningful_change(disk_data, health_data)
+        except Exception:
+            should_save = True
+
+    if should_save:
+        p.parent.mkdir(parents=True, exist_ok=True)
+        temp_p = p.with_suffix(".tmp")
+        with open(temp_p, "w", encoding="utf-8") as f:
+            json.dump(health_data, f, indent=2, sort_keys=True)
+            f.write("\n")
+        shutil.move(str(temp_p), str(p))
+
+    # 2. Always write full health artifact (sources-health.json)
+    art_path = artifact_path or (repo_root / "sources-health.json")
+    try:
+        art_path.parent.mkdir(parents=True, exist_ok=True)
+        temp_art = art_path.with_suffix(".tmp")
+        with open(temp_art, "w", encoding="utf-8") as af:
+            json.dump(health_data, af, indent=2, sort_keys=True)
+            af.write("\n")
+        shutil.move(str(temp_art), str(art_path))
+    except Exception as exc:
+        print(f"[SourceHealth] Error writing artifact {art_path}: {exc}", file=sys.stderr)
+
+    # 3. Always write to GITHUB_STEP_SUMMARY if available
+    summary_target = step_summary_path or os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary_target:
+        try:
+            summary_p = Path(summary_target)
+            now_str = health_data.get("last_run", get_iso_now())
+            lines = [
+                "",
+                "### Ingestion Source Health Run Summary",
+                f"- **Evaluated At (UTC):** `{now_str}`",
+                "",
+                "| Source ID | Status | Consecutive Failures | Last Reached | Last Changed |",
+                "| :--- | :--- | :--- | :--- | :--- |"
+            ]
+            for sid, sinfo in sorted(health_data.get("sources", {}).items()):
+                st = sinfo.get("status", "unknown")
+                fails = sinfo.get("consecutive_failures", 0)
+                reached = sinfo.get("last_reached") or "never"
+                changed = sinfo.get("last_changed") or "never"
+                lines.append(f"| `{sid}` | `{st}` | {fails} | {reached} | {changed} |")
+            lines.append("")
+            with open(summary_p, "a", encoding="utf-8") as sf:
+                sf.write("\n".join(lines) + "\n")
+        except Exception as exc:
+            print(f"[SourceHealth] Error writing step summary: {exc}", file=sys.stderr)
+
+    return should_save
 
 
 def record_source_check(

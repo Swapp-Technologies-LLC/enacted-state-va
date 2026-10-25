@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 """
 check_water_sources.py
-Unified Water Source Checker & Absence Detection Dispatcher (Slice I1).
+Unified Water Source Checker & Absence Detection Dispatcher (Slice I1 Fix Pass).
 Swapp Technologies LLC
 
-Requirements (Slice I1):
-1. Run reachability and hash check of each water source's index page and latest report.
-2. Honours robots.txt: a disallowed path is skipped and reported, never fetched.
-3. One request at a time per host, with at least 5 s between requests.
-4. A changed or new report file -> saves cached file and sha256 under .cache/pdf_cache/,
-   records note "new report — record not yet written". No measurement record is generated automatically.
-5. "Expected report not found" fires ONLY from each source's cadence_basis (ig08), never because a daily run saw nothing.
-6. Writes status/sources.json on every run (last_reached, last_changed, consecutive_failures).
-7. Auto-manages issues for unreachable sources with built-in GITHUB_TOKEN (comment on fail, close on recovery).
+Requirements (Slice I1 Fix Pass):
+1. Discovery: For each source with index_url, lists links on fetched index page.
+   Matches links with issue_pattern or get_report_period year rule.
+   A matching link that isn't last_found.url and belongs to current cycle is cached with SHA-256
+   and recorded in manifest with note: "new report — record not yet written".
+2. Existing same-URL hash check stays.
+3. Absence detection: Decided strictly by check_expected_reports.py logic:
+   Past due_date + grace_days per cadence_basis, and no issue for current cycle found on a
+   *successfully fetched* index page.
+4. Outages: An unreachable index page or report is an outage. Recorded in status/sources.json
+   and source-alert issue, NEVER to absence.
+5. Missing fields: If any water source lacks index_url, skip discovery for it without inventing one.
+6. Meaningful changes only: status/sources.json is only committed if status flips, last_changed moves,
+   or sources are added/removed. Full health with timestamps is always written to sources-health.json
+   and $GITHUB_STEP_SUMMARY.
 """
 
 import os
@@ -22,6 +28,7 @@ import json
 import yaml
 import hashlib
 import argparse
+import urllib.parse
 from pathlib import Path
 from datetime import datetime, date, timedelta, timezone
 from typing import List, Dict, Any, Optional, Tuple
@@ -39,6 +46,14 @@ from source_health import (
     manage_source_alert_issues,
     get_iso_now,
     StubIssueClient
+)
+from check_expected_reports import (
+    extract_links_from_html,
+    hash_link_list,
+    get_report_period,
+    parse_cadence_due_date,
+    is_cadence_basis_valid,
+    format_not_found_record
 )
 
 
@@ -78,125 +93,29 @@ def is_valid_url(url: Optional[str]) -> bool:
     return u.startswith("http://") or u.startswith("https://")
 
 
-def is_cadence_basis_valid(cadence_basis: Any) -> bool:
-    """
-    Validates cadence_basis:
-    Must be a dict with EXACTLY ONE of 'rule' or 'agency_statement'.
-    - If 'rule': citation and quoted_sentence must be non-empty strings without [FOUNDER:.
-    - If 'agency_statement': url, date_read, and quoted_sentence must be non-empty without [FOUNDER:.
-    """
-    if not isinstance(cadence_basis, dict):
-        return False
-
-    has_rule = "rule" in cadence_basis
-    has_agency = "agency_statement" in cadence_basis
-
-    if has_rule == has_agency:
-        return False
-
-    if has_rule:
-        rule = cadence_basis.get("rule")
-        if not isinstance(rule, dict):
-            return False
-        citation = str(rule.get("citation", "")).strip()
-        quote = str(rule.get("quoted_sentence", "")).strip()
-        if not citation or not quote:
-            return False
-        if citation.startswith("[FOUNDER:") or quote.startswith("[FOUNDER:"):
-            return False
-        return True
-
-    if has_agency:
-        stmt = cadence_basis.get("agency_statement")
-        if not isinstance(stmt, dict):
-            return False
-        url = str(stmt.get("url", "")).strip()
-        date_read = str(stmt.get("date_read", "")).strip()
-        quote = str(stmt.get("quoted_sentence", "")).strip()
-        if not url or not date_read or not quote:
-            return False
-        if url.startswith("[FOUNDER:") or date_read.startswith("[FOUNDER:") or quote.startswith("[FOUNDER:"):
-            return False
-        return True
-
-    return False
-
-
-def parse_cadence_due_date(source: Dict[str, Any], current_year: int) -> Optional[date]:
-    """Derives expected reporting due date from source expected_by."""
-    expected_by = source.get("expected_by")
-    if not expected_by:
-        return None
-
-    if isinstance(expected_by, dict):
-        m = expected_by.get("month")
-        d = expected_by.get("day")
-        if isinstance(m, int) and isinstance(d, int) and 1 <= m <= 12 and 1 <= d <= 31:
-            try:
-                return date(current_year, m, d)
-            except ValueError:
-                return None
-        return None
-
-    if not isinstance(expected_by, str):
-        return None
-
-    s = expected_by.strip()
-    if s.startswith("[FOUNDER:"):
-        return None
-
-    # Quarter pattern
-    qm = re.search(r"(\d+)\s+days after quarter end", s, re.IGNORECASE)
-    if qm:
-        return date(current_year, 3, 31) + timedelta(days=int(qm.group(1)))
-
-    # Month name pattern (e.g. "July 1", "April 1")
-    month_names = {
-        "january": 1, "february": 2, "march": 3, "april": 4, "may": 5, "june": 6,
-        "july": 7, "august": 8, "september": 9, "october": 10, "november": 11, "december": 12
-    }
-    m_match = re.search(r"\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})\b", s, re.IGNORECASE)
-    if m_match:
-        mnum = month_names.get(m_match.group(1).lower())
-        dnum = int(m_match.group(2))
-        if mnum and 1 <= dnum <= 31:
-            try:
-                return date(current_year, mnum, dnum)
-            except ValueError:
-                return None
-
-    # MM-DD pattern
-    mmdd = re.search(r"\b(\d{1,2})-(\d{1,2})\b", s)
-    if mmdd:
-        m = int(mmdd.group(1))
-        d = int(mmdd.group(2))
-        if 1 <= m <= 12 and 1 <= d <= 31:
-            try:
-                return date(current_year, m, d)
-            except ValueError:
-                return None
-
-    return None
-
-
 def run_water_checks(
     repo_dir: Path,
-    crawler: Optional[EnactedCrawler] = None,
     as_of: Optional[date] = None,
     filter_source: Optional[str] = None,
+    crawler: Optional[EnactedCrawler] = None,
     status_path: Optional[Path] = None,
-    issue_client = None
+    issue_client: Optional[Any] = None,
+    candidate_output_dir: Optional[Path] = None
 ) -> Dict[str, Any]:
     """
-    Executes reachability, hash, and cadence absence checks across water sources.
-    Returns summary dict.
+    Runs deterministic reachability, discovery, and cadence checks across watched water sources.
+    - Zero model calls anywhere (Rule 10).
+    - Caches new reports under .cache/pdf_cache/ with verified sha256 and manifest note.
+    - Zero measurement records written automatically.
+    - Evaluates absence candidates strictly from cadence_basis and index discovery.
+    - Updates status/sources.json only on meaningful changes (status flip, last_changed, add/remove).
     """
     c = crawler or EnactedCrawler()
-    today = as_of or datetime.now(timezone.utc).date()
+    today = as_of or date.today()
     now_iso = get_iso_now()
 
-    water_measurements = repo_dir / "water" / "measurements"
-    sources_to_check = load_all_system_sources(water_measurements)
+    water_dir = repo_dir / "water" / "measurements"
+    sources_to_check = load_all_system_sources(water_dir)
 
     if filter_source and filter_source != "all":
         sources_to_check = [
@@ -222,20 +141,34 @@ def run_water_checks(
     checked_sources = 0
     changed_sources = 0
 
+    current_year = today.year
+    expected_period = str(current_year - 1)
+
     for system_dir, src in sources_to_check:
         source_id = src.get("id", system_dir.name)
+        source_title = src.get("title", "Water Quality Report")
         checked_sources += 1
 
         index_url = src.get("index_url")
         last_found = src.get("last_found", {})
-        report_url = last_found.get("url")
-        known_sha256 = last_found.get("sha256")
+        last_found_url = last_found.get("url")
+        last_found_sha256 = last_found.get("sha256")
+        last_found_period = get_report_period(last_found)
+        issue_pattern = src.get("issue_pattern")
+        cadence_basis = src.get("cadence_basis")
+        active = src.get("active", True)
 
         source_success = True
         source_changed = False
         error_msg = ""
+        index_fetched_ok = False
+        links_on_index: List[Tuple[str, str]] = []
+        discovered_report_for_current_cycle = False
+        new_report_found_in_discovery = False
 
-        # 1. Reachability & hash check of index page
+        # -------------------------------------------------------------------
+        # 1. Index Page Fetch & Link Discovery (F1)
+        # -------------------------------------------------------------------
         if is_valid_url(index_url):
             allowed, status_code, body, err = c.fetch(index_url)
             if not allowed:
@@ -245,12 +178,107 @@ def run_water_checks(
                 source_success = False
                 error_msg = err or f"HTTP {status_code}"
             else:
-                # Successfully reached index page
-                pass
+                html_text = body.decode("utf-8", errors="replace")
+                links_on_index = extract_links_from_html(html_text, index_url)
+                if not links_on_index:
+                    source_success = False
+                    error_msg = "Index page link list is empty"
+                else:
+                    index_fetched_ok = True
 
-        # 2. Reachability & hash check of latest report
-        if is_valid_url(report_url) and source_success:
-            allowed, status_code, report_bytes, err = c.fetch(report_url)
+                    # Discover newer reports from index links
+                    for link_url, link_text in links_on_index:
+                        if link_url == last_found_url:
+                            continue
+
+                        link_period = get_report_period({"title": link_text, "url": link_url})
+                        parsed_path = urllib.parse.urlparse(link_url).path
+                        filename = os.path.basename(parsed_path.rstrip("/"))
+
+                        is_match = False
+                        cand_period_used = None
+
+                        if issue_pattern:
+                            # Test issue_pattern with candidate periods: link_period, expected_period, current_year
+                            cand_periods = []
+                            if link_period:
+                                cand_periods.append(link_period)
+                            for y in [expected_period, str(current_year)]:
+                                if y not in cand_periods:
+                                    cand_periods.append(y)
+
+                            for cp in cand_periods:
+                                pat = issue_pattern.replace("{period}", re.escape(cp))
+                                if re.search(pat, filename, re.IGNORECASE) or re.search(pat, link_text, re.IGNORECASE):
+                                    is_match = True
+                                    cand_period_used = cp
+                                    break
+                        else:
+                            # Use get_report_period year rule
+                            lower_target = f"{filename} {link_text}".lower()
+                            if link_period:
+                                if any(term in lower_target for term in ("report", "ccr", "wqr")):
+                                    is_match = True
+                                    cand_period_used = link_period
+                            elif re.search(rf"\b{expected_period}\b", lower_target) and any(term in lower_target for term in ("report", "ccr", "wqr")):
+                                is_match = True
+                                cand_period_used = expected_period
+
+                        if is_match:
+                            # Check whether it belongs to current/newer cycle
+                            belongs_to_cycle = False
+                            if cand_period_used:
+                                if last_found_period:
+                                    try:
+                                        if int(cand_period_used) >= int(expected_period) or int(cand_period_used) > int(last_found_period):
+                                            belongs_to_cycle = True
+                                    except ValueError:
+                                        if str(cand_period_used) >= str(expected_period):
+                                            belongs_to_cycle = True
+                                else:
+                                    belongs_to_cycle = True
+                            else:
+                                belongs_to_cycle = True
+
+                            if belongs_to_cycle:
+                                # Fetch newly discovered report
+                                r_allowed, r_code, r_bytes, r_err = c.fetch(link_url)
+                                if not r_allowed:
+                                    source_success = False
+                                    error_msg = "new_report_disallowed_by_robots_txt"
+                                elif r_code != 200:
+                                    source_success = False
+                                    error_msg = f"HTTP {r_code} fetching discovered report: {r_err}"
+                                else:
+                                    new_sha = hashlib.sha256(r_bytes).hexdigest()
+                                    cached_file = cache_dir / f"{new_sha}.bin"
+                                    cached_file.write_bytes(r_bytes)
+
+                                    new_reports.append({
+                                        "source_id": source_id,
+                                        "system": system_dir.name,
+                                        "report_url": link_url,
+                                        "previous_url": last_found_url,
+                                        "previous_sha256": last_found_sha256,
+                                        "new_sha256": new_sha,
+                                        "fetched_at": now_iso,
+                                        "note": "new report — record not yet written"
+                                    })
+                                    source_changed = True
+                                    changed_sources += 1
+                                    discovered_report_for_current_cycle = True
+                                    new_report_found_in_discovery = True
+                                    print(f"[WaterCheck] Discovered new report for {source_id}: {link_url} ({new_sha})")
+                                    break
+        else:
+            # index_url absent or placeholder ([FOUNDER: ...]): skip discovery without inventing
+            pass
+
+        # -------------------------------------------------------------------
+        # 2. Same-URL Hash Check (F1)
+        # -------------------------------------------------------------------
+        if not new_report_found_in_discovery and source_success and is_valid_url(last_found_url):
+            allowed, status_code, report_bytes, err = c.fetch(last_found_url)
             if not allowed:
                 source_success = False
                 error_msg = "disallowed_by_robots_txt"
@@ -259,56 +287,97 @@ def run_water_checks(
                 error_msg = err or f"HTTP {status_code}"
             else:
                 fetched_sha256 = hashlib.sha256(report_bytes).hexdigest()
-                # Check against known hash
-                if known_sha256 and fetched_sha256 != known_sha256:
-                    # New or changed report found!
+                if last_found_sha256 and fetched_sha256 != last_found_sha256:
+                    # Same-URL changed report content
                     source_changed = True
                     changed_sources += 1
-                    # Save to cache
                     cached_file = cache_dir / f"{fetched_sha256}.bin"
                     cached_file.write_bytes(report_bytes)
 
-                    # Record note: "new report — record not yet written"
                     new_reports.append({
                         "source_id": source_id,
                         "system": system_dir.name,
-                        "report_url": report_url,
-                        "previous_sha256": known_sha256,
+                        "report_url": last_found_url,
+                        "previous_url": last_found_url,
+                        "previous_sha256": last_found_sha256,
                         "new_sha256": fetched_sha256,
                         "fetched_at": now_iso,
                         "note": "new report — record not yet written"
                     })
                     print(
-                        f"[WaterCheck] New report detected for {source_id}: "
-                        f"{fetched_sha256} (was {known_sha256}). "
-                        f"Cached to .cache/. Note: new report -- record not yet written.",
+                        f"[WaterCheck] Changed content detected at same URL for {source_id}: "
+                        f"{fetched_sha256} (was {last_found_sha256}). Cached to .cache/.",
                         file=sys.stderr
                     )
                 else:
-                    # Hash matches known file; ensure it is cached
                     cached_file = cache_dir / f"{fetched_sha256}.bin"
                     if not cached_file.exists():
                         cached_file.write_bytes(report_bytes)
 
-        # 3. Absence detection based strictly on cadence_basis (Rule ig08)
-        cadence_basis = src.get("cadence_basis")
-        if is_cadence_basis_valid(cadence_basis) and src.get("active", True):
-            due_date = parse_cadence_due_date(src, today.year)
+        # -------------------------------------------------------------------
+        # 3. Absence Detection Decided by Cadence Basis & Index Check (F1)
+        # -------------------------------------------------------------------
+        if active and is_cadence_basis_valid(cadence_basis):
+            due_date = parse_cadence_due_date(src, current_year)
             if due_date:
-                grace = src.get("grace_days", 30)
-                cutoff = due_date + timedelta(days=grace)
-                # Only if today has passed the statutory/stated due date + grace
-                if today > cutoff and not source_success:
-                    absence_candidates.append({
-                        "source_id": source_id,
-                        "system": system_dir.name,
-                        "due_date": due_date.isoformat(),
-                        "cutoff_date": cutoff.isoformat(),
-                        "status": "expected_report_not_found"
-                    })
+                grace_days = src.get("grace_days", 30)
+                effective_deadline = due_date + timedelta(days=grace_days)
 
-        # Update source health data
-        primary_url = report_url if is_valid_url(report_url) else (index_url if is_valid_url(index_url) else "")
+                # Rule: Before due -> no absence whatever happens
+                if today > effective_deadline:
+                    # Past due + grace!
+                    # Rule: Outage (index unreachable) is NEVER an absence candidate!
+                    if index_fetched_ok:
+                        has_report_for_cycle = False
+
+                        if last_found_period:
+                            try:
+                                if int(last_found_period) >= int(expected_period):
+                                    has_report_for_cycle = True
+                            except ValueError:
+                                if str(last_found_period) == str(expected_period):
+                                    has_report_for_cycle = True
+
+                        if discovered_report_for_current_cycle:
+                            has_report_for_cycle = True
+
+                        # Check extracted links on index for current cycle
+                        if not has_report_for_cycle and links_on_index:
+                            for l_url, l_txt in links_on_index:
+                                lp = get_report_period({"title": l_txt, "url": l_url})
+                                if lp and str(lp) == str(expected_period):
+                                    has_report_for_cycle = True
+                                    break
+                                if issue_pattern:
+                                    pat = issue_pattern.replace("{period}", re.escape(expected_period))
+                                    fn = os.path.basename(urllib.parse.urlparse(l_url).path.rstrip("/"))
+                                    if re.search(pat, fn, re.IGNORECASE) or re.search(pat, l_txt, re.IGNORECASE):
+                                        has_report_for_cycle = True
+                                        break
+                                else:
+                                    fn = os.path.basename(urllib.parse.urlparse(l_url).path.rstrip("/"))
+                                    lt = f"{fn} {l_txt}".lower()
+                                    if re.search(rf"\b{expected_period}\b", lt) and any(t in lt for t in ("report", "ccr", "wqr")):
+                                        has_report_for_cycle = True
+                                        break
+
+                        if not has_report_for_cycle:
+                            candidate_title = f"{source_title}: no {expected_period} report found at watched source as of {today.isoformat()}."
+                            absence_candidates.append({
+                                "source_id": source_id,
+                                "system": system_dir.name,
+                                "period": expected_period,
+                                "due_date": due_date.isoformat(),
+                                "cutoff_date": effective_deadline.isoformat(),
+                                "status": "expected_report_not_found",
+                                "title": candidate_title
+                            })
+                            print(f"[WaterCheck] Absence candidate: {source_id} missing period {expected_period} (deadline {effective_deadline})")
+
+        # -------------------------------------------------------------------
+        # 4. Source Health Tracking
+        # -------------------------------------------------------------------
+        primary_url = index_url if is_valid_url(index_url) else (last_found_url if is_valid_url(last_found_url) else "")
         record_source_check(
             source_id=source_id,
             url=primary_url,
@@ -324,10 +393,10 @@ def run_water_checks(
         manifest_path.parent.mkdir(parents=True, exist_ok=True)
         manifest_path.write_text(json.dumps(new_reports, indent=2), encoding="utf-8")
 
-    # Persist health data to status/sources.json
-    save_source_health(health_data, st_path)
+    # Persist health data to status/sources.json ONLY on meaningful change (F3)
+    save_source_health(health_data, st_path, only_if_meaningful=True)
 
-    # Auto-manage GitHub alert issues
+    # Auto-manage GitHub alert issues (ig02)
     issue_actions = manage_source_alert_issues(health_data, issue_client=issue_client)
 
     return {
@@ -335,12 +404,13 @@ def run_water_checks(
         "changed_sources": changed_sources,
         "new_reports_count": len(new_reports),
         "absence_candidates_count": len(absence_candidates),
+        "absence_candidates": absence_candidates,
         "issue_actions": issue_actions
     }
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Enacted Water Sources Reachability & Cadence Checker")
+    parser = argparse.ArgumentParser(description="Enacted Water Sources Reachability, Discovery & Cadence Checker")
     parser.add_argument("--repo-dir", default=str(REPO_DIR), help="Path to state repository root")
     parser.add_argument("--source", default="all", help="Source ID to check (or 'all')")
     parser.add_argument("--as-of", default=None, help="Evaluation date (YYYY-MM-DD)")
@@ -356,7 +426,7 @@ def main():
         as_of=eval_date,
         filter_source=args.source
     )
-    print(f"[WaterCheck] Done. Checked: {res['checked_sources']} | Changed: {res['changed_sources']} | New reports: {res['new_reports_count']}")
+    print(f"[WaterCheck] Done. Checked: {res['checked_sources']} | Changed: {res['changed_sources']} | New reports: {res['new_reports_count']} | Absence candidates: {res['absence_candidates_count']}")
     if res['issue_actions']:
         print(f"[WaterCheck] Issue actions: {res['issue_actions']}")
 

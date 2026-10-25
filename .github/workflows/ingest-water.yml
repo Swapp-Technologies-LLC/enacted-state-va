@@ -94,6 +94,14 @@ jobs:
           echo "date=$(date -u +'%Y-%m-%d')" >> $GITHUB_OUTPUT
           echo "ts=$(date -u +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
 
+      - name: Upload Health Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sources-health-${{ steps.timestamp.outputs.ts || 'run' }}
+          path: sources-health.json
+          if-no-files-found: ignore
+
       - name: Create Pull Request (Never Direct to Main)
         uses: peter-evans/create-pull-request@v6
         with:

@@ -10,3 +10,5 @@ __pycache__/
 # Local newsletter previews (generate_newsletter.py writes them here) and test cache
 dev/
 .pytest_cache/
+
+sources-health.json
