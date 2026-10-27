@@ -8,7 +8,7 @@ Tests:
 1. Workflows parse as valid YAML with distinct concurrency groups.
 2. Workflow hygiene: zero [FOUNDER:, zero PATs (ENACTED_BOT_TOKEN), zero personal emails,
    zero firearms strings, crons commented out with disabled note, ubuntu-24.04 runner,
-   actions/create-github-app-token using SWAPP_BOT_APP_ID & SWAPP_BOT_PRIVATE_KEY.
+   actions/create-github-app-token using SWAPP_BOT_CLIENT_ID & SWAPP_BOT_PRIVATE_KEY.
 3. Robots.txt: a path disallowed by robots.txt is skipped and logged, never fetched.
 4. Rate limiting: enforces >= 5 s spacing between requests to the same host.
 5. Discovery: An index fixture lists the known report plus a newer-year file ->
@@ -104,6 +104,7 @@ class TestIngestSliceI1(unittest.TestCase):
             "actions/checkout@v4", "actions/setup-python@v5", "actions/cache@v4",
             "actions/create-github-app-token@v1", "actions/upload-artifact@v4",
             "peter-evans/create-pull-request@v6",
+            "app-id:", "SWAPP_BOT_APP_ID",
         ]
         for wf_path in workflow_files:
             content = wf_path.read_text(encoding="utf-8")
@@ -124,9 +125,10 @@ class TestIngestSliceI1(unittest.TestCase):
 
             if wf_path.name.startswith("ingest-"):
                 self.assertIn("actions/create-github-app-token@v3", content, f"{wf_path.name} must use actions/create-github-app-token@v3")
+                self.assertIn("client-id: ${{ secrets.SWAPP_BOT_CLIENT_ID }}", content, f"{wf_path.name} must use client-id: ${{ secrets.SWAPP_BOT_CLIENT_ID }}")
                 self.assertIn("actions/upload-artifact@v6", content, f"{wf_path.name} must use actions/upload-artifact@v6")
                 self.assertIn("peter-evans/create-pull-request@v8", content, f"{wf_path.name} must use peter-evans/create-pull-request@v8")
-                self.assertIn("${{ secrets.SWAPP_BOT_APP_ID }}", content)
+                self.assertIn("${{ secrets.SWAPP_BOT_CLIENT_ID }}", content)
                 self.assertIn("${{ secrets.SWAPP_BOT_PRIVATE_KEY }}", content)
                 self.assertIn("swapp-bot[bot]", content)
                 self.assertIn(
