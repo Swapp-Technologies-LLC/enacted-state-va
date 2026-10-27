@@ -145,8 +145,14 @@ def run_water_checks(
     expected_period = str(current_year - 1)
 
     for system_dir, src in sources_to_check:
-        source_id = src.get("id", system_dir.name)
-        source_title = src.get("title", "Water Quality Report")
+        source_id = src.get("id")
+        if not source_id:
+            print(f"[WaterCheck] Skipping source entry missing required field 'id' in {system_dir}", file=sys.stderr)
+            continue
+        source_title = src.get("title")
+        if not source_title:
+            print(f"[WaterCheck] Skipping source entry {source_id} missing required field 'title' in {system_dir}", file=sys.stderr)
+            continue
         checked_sources += 1
 
         index_url = src.get("index_url")
