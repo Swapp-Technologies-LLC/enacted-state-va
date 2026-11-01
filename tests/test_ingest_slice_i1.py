@@ -621,6 +621,23 @@ class TestIngestSliceI1(unittest.TestCase):
             self.assertIn("status", src)
             self.assertIsInstance(src["consecutive_failures"], int)
 
+    # 13. Verify Gate No Direct Network Grep Test
+    def test_verify_gate_no_direct_network_grep(self):
+        verify_py = REPO_DIR / "verify_corpus_integrity.py"
+        self.assertTrue(verify_py.exists(), "verify_corpus_integrity.py must exist")
+        text = verify_py.read_text(encoding="utf-8")
+        forbidden = ["urllib.request", "requests", "urlopen", "curl.exe"]
+        for f_word in forbidden:
+            self.assertNotIn(f_word, text, f"Direct network primitive '{f_word}' forbidden in verify_corpus_integrity.py")
+
+    # 14. Verify Gate Robots.txt Skip Mock Test
+    def test_verify_gate_robots_txt_skip(self):
+        crawler = EnactedCrawler(min_interval=0.0, obey_robots=True)
+        crawler.register_robots_txt("arlington.granicus.com", "User-agent: *\nDisallow: /\n")
+        crawler.register_robots_txt("allowed.gov", "User-agent: *\nAllow: /\n")
+        self.assertFalse(crawler.can_fetch("https://arlington.granicus.com/MetaViewer.php?view_id=2"))
+        self.assertTrue(crawler.can_fetch("https://allowed.gov/doc.pdf"))
+
     # 12. Stub Issue Manager Lifecycle (Open -> Comment -> Close)
     def test_stub_issue_manager_lifecycle(self):
         client = StubIssueClient()

@@ -22,7 +22,11 @@ import ssl
 import hashlib
 import subprocess
 from datetime import datetime, date
-import urllib.request
+from urllib.parse import urlparse
+import sys
+if os.path.dirname(os.path.abspath(__file__)) not in sys.path:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from scripts.crawler import EnactedCrawler
 import html
 
 def validate_authority_data(auth_data: dict, jur_name: str, cache_dir: str) -> list:
@@ -189,6 +193,8 @@ def main():
     print("===============================================================\n")
 
     failed_checks = 0
+    crawler = EnactedCrawler(min_interval=float(os.environ.get("VERIFY_CRAWLER_INTERVAL", "0.1")))
+    robots_skipped_by_host = {}
 
     # Discover all records
     records = []
@@ -271,13 +277,6 @@ def main():
     # GATE 3: Sourcing Blocklist & Primary Source Liveness
     # -------------------------------------------------------------
     print("\n[GATE 3] Sourcing Blocklist & Primary Source Liveness:")
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 (compatible; EnactedCorpusBot/1.0)"
-    }
-
     checked_urls = set()
     for r in records:
         fm = r["fm"]
@@ -294,21 +293,23 @@ def main():
 
         if url not in checked_urls:
             checked_urls.add(url)
-            try:
-                res = subprocess.run(["curl.exe", "-I", "-s", url], capture_output=True, text=True, timeout=15)
-                first_line = res.stdout.splitlines()[0] if res.stdout else ""
-                if "200" in first_line or "302" in first_line:
-                    print(f"  ✓ HTTP OK: {url[:70]}...")
-                else:
-                    req = urllib.request.Request(url, headers=headers)
-                    with urllib.request.urlopen(req, context=ctx, timeout=15) as resp:
-                        if resp.status in (200, 302):
-                            print(f"  ✓ HTTP 200 OK: {url[:70]}...")
-                        else:
-                            print(f"  FAIL: {url} returned {resp.status}")
-                            failed_checks += 1
-            except Exception as e:
-                print(f"  FAIL: Error verifying {url}: {e}")
+            if not crawler.can_fetch(url):
+                host = urlparse(url).netloc.lower()
+                robots_skipped_by_host[host] = robots_skipped_by_host.get(host, 0) + 1
+                print(f"  not fetched: robots ({url})")
+                continue
+
+            allowed, status_code, body, err = crawler.fetch(url, timeout=25)
+            if not allowed:
+                host = urlparse(url).netloc.lower()
+                robots_skipped_by_host[host] = robots_skipped_by_host.get(host, 0) + 1
+                print(f"  not fetched: robots ({url})")
+                continue
+
+            if status_code in (200, 302):
+                print(f"  ✓ HTTP {status_code} OK: {url[:70]}...")
+            else:
+                print(f"  FAIL: {url} returned {status_code} ({err})")
                 failed_checks += 1
 
     # -------------------------------------------------------------
@@ -332,26 +333,47 @@ def main():
             continue
 
         cache_file = os.path.join(cache_dir, f"{expected_sha}.bin")
+
+        # Robots.txt compliance: check robots before any fetch
+        if not crawler.can_fetch(pdf_url):
+            host = urlparse(pdf_url).netloc.lower()
+            robots_skipped_by_host[host] = robots_skipped_by_host.get(host, 0) + 1
+            if os.path.exists(cache_file):
+                with open(cache_file, "rb") as cf:
+                    data = cf.read()
+                actual_sha = hashlib.sha256(data).hexdigest()
+                if actual_sha == expected_sha:
+                    print(f"  not fetched: robots ({pdf_url}) [cached file sha confirmed: {expected_sha[:12]}...]")
+                else:
+                    print(f"  FAIL: {r['rel_path']} cached file hash mismatch! Expected {expected_sha}, got {actual_sha}")
+                    failed_checks += 1
+            else:
+                print(f"  not fetched: robots ({pdf_url})")
+            continue
+
         data = None
         if os.path.exists(cache_file):
             with open(cache_file, "rb") as cf:
                 data = cf.read()
         else:
-            res = subprocess.run(["curl.exe", "-s", "-o", cache_file, pdf_url], capture_output=True)
-            if res.returncode == 0 and os.path.exists(cache_file) and os.path.getsize(cache_file) > 0:
-                with open(cache_file, "rb") as cf:
-                    data = cf.read()
-            else:
-                try:
-                    req = urllib.request.Request(pdf_url, headers=headers)
-                    with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
-                        data = resp.read()
-                    with open(cache_file, "wb") as cf:
-                        cf.write(data)
-                except Exception as e:
-                    print(f"  FAIL: Could not download {pdf_url}: {e}")
+            try:
+                allowed, status_code, body, err = crawler.fetch(pdf_url, timeout=30)
+                if not allowed:
+                    host = urlparse(pdf_url).netloc.lower()
+                    robots_skipped_by_host[host] = robots_skipped_by_host.get(host, 0) + 1
+                    print(f"  not fetched: robots ({pdf_url})")
+                    continue
+                if status_code != 200:
+                    print(f"  FAIL: Could not download {pdf_url}: HTTP {status_code} ({err})")
                     failed_checks += 1
                     continue
+                data = body
+                with open(cache_file, "wb") as cf:
+                    cf.write(data)
+            except Exception as e:
+                print(f"  FAIL: Could not download {pdf_url}: {e}")
+                failed_checks += 1
+                continue
 
         actual_sha = hashlib.sha256(data).hexdigest()
         if actual_sha != expected_sha:
@@ -579,6 +601,11 @@ def main():
                 failed_checks += 1
         else:
             print(f"  ✓ {jur}: Verified authority.yaml contact integrity.")
+
+    if robots_skipped_by_host:
+        print("\nRobots.txt Skipped URLs by Host:")
+        for host, count in sorted(robots_skipped_by_host.items()):
+            print(f"  - {host}: {count} URL(s) skipped")
 
     print("\n===============================================================")
     if failed_checks == 0:
