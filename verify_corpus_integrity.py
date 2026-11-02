@@ -182,7 +182,7 @@ BLOCKLISTED_DOMAINS = [
 IGNORE_DIRS = (
     "water", "docs", "scripts", "reports", "data", "feeds", "state_statutes",
     ".git", ".cache", "_quarantine_unverified", "node_modules", "dist", ".github", "__pycache__",
-    "tests", ".pytest_cache", "status"
+    "tests", ".pytest_cache", "status", "verification"
 )
 
 def main():
