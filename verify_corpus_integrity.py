@@ -185,6 +185,15 @@ IGNORE_DIRS = (
     "tests", ".pytest_cache", "status", "verification"
 )
 
+def get_verify_crawler() -> EnactedCrawler:
+    """Return EnactedCrawler for verification suite.
+    Uses crawler default min_interval (5.0 s) when VERIFY_CRAWLER_INTERVAL is unset.
+    VERIFY_CRAWLER_INTERVAL environment variable acts as an override only.
+    """
+    if "VERIFY_CRAWLER_INTERVAL" in os.environ:
+        return EnactedCrawler(min_interval=float(os.environ["VERIFY_CRAWLER_INTERVAL"]))
+    return EnactedCrawler()
+
 def main():
     repo_name = os.path.basename(REPO_ROOT)
     print("===============================================================")
@@ -193,7 +202,7 @@ def main():
     print("===============================================================\n")
 
     failed_checks = 0
-    crawler = EnactedCrawler(min_interval=float(os.environ.get("VERIFY_CRAWLER_INTERVAL", "0.1")))
+    crawler = get_verify_crawler()
     robots_skipped_by_host = {}
 
     # Discover all records
