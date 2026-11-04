@@ -1,0 +1,17 @@
+system: "Arlington County Department of Environmental Services"
+how_sampled_url: "/va/arlington/water/how-sampled/"
+source_sha256: 5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53
+passages:
+  - label: "90th percentile"
+    quote: "The Detected Level represents the 90th percentile value."
+    source_page: 4
+  - label: "Action level"
+    quote: "Action Level (AL) is the concentration of a contaminant which, if exceeded, triggers treatment or other requirements that a water system must follow."
+    source_page: 3
+  - label: "Sampling"
+    quote: "Testing for this parameter was conducted in 2022."
+    source_page: 4
+tap_testing:
+  quote: "If you are concerned about lead in your water and wish to have your water tested, contact Arlington County at 703-228-6555 and we can provide information on residential lead testing."
+  contact: "703-228-6555"
+  source_page: 2

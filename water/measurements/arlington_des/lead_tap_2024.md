@@ -25,6 +25,11 @@ determination:
   status: not_stated
   quote: "None of the 16 samples tested for lead exceeded the current Action Level of 15 ppb."
   source_page: Page 4
+sites_above_al:
+  quote: "None of the 16 samples tested for lead exceeded the current Action Level of 15 ppb."
+  column_label: "none"
+  source_page: 4
+  glyph: false
 primary_source_url: https://www.arlingtonva.us/files/sharedassets/public/v/1/water/documents/2024-ccr_willston_final_061725.pdf
 source_pdf: https://www.arlingtonva.us/files/sharedassets/public/v/1/water/documents/2024-ccr_willston_final_061725.pdf
 source_sha256: 5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53
