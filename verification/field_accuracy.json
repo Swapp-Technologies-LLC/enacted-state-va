@@ -1,6 +1,6 @@
 {
   "repository": "enacted-state-va",
-  "check_timestamp": "2026-11-02T02:28:47.718913+00:00",
+  "check_timestamp": "2026-11-04T21:48:30.993926+00:00",
   "date_renderings_rules": [
     "YYYY-MM-DD",
     "MM/DD/YYYY",
@@ -26,8 +26,19 @@
       "record": "alexandria\\ordinances\\ord_5614.md",
       "record_type": "legislative",
       "jurisdiction": "va/alexandria",
+      "source_host": "alexandria.legistar.com",
       "sources_available": [
         ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin"
+      ],
+      "source_metrics": [
+        {
+          "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
+          "page_count": 72,
+          "total_chars": 150248,
+          "chars_per_page": 2086.777777777778,
+          "is_extractable": true
+        }
       ],
       "fields": {
         "title": {
@@ -35,6 +46,7 @@
           "recorded_value": "Ord. No. 5614: Commercial Uses Zoning Regulations Update",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": null
         },
         "action_status": {
@@ -42,6 +54,7 @@
           "recorded_value": "Enacted",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": null
         },
         "introduced_date": {
@@ -49,6 +62,7 @@
           "recorded_value": "2025-12-13",
           "matched_string": "December 13, 2025",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": "page 1, line 27"
         },
         "enacted_date": {
@@ -56,6 +70,7 @@
           "recorded_value": "2026-01-24",
           "matched_string": "January 24, 2026",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": "page 72, line 24"
         },
         "effective_date": {
@@ -63,6 +78,7 @@
           "recorded_value": "2026-01-24",
           "matched_string": "January 24, 2026",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": "page 72, line 24"
         },
         "bill_number": {
@@ -70,6 +86,7 @@
           "recorded_value": "Ord. No. 5614",
           "matched_string": "5614",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": "page 1, line 4"
         },
         "sponsor": {
@@ -77,6 +94,7 @@
           "recorded_value": "Alexandria City Council",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+          "source_host": "alexandria.legistar.com",
           "location": null
         }
       }
@@ -85,8 +103,19 @@
       "record": "arlington\\council_bills\\zoa_2020_02.md",
       "record_type": "legislative",
       "jurisdiction": "va/arlington",
+      "source_host": "arlington.granicus.com",
       "sources_available": [
         ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin"
+      ],
+      "source_metrics": [
+        {
+          "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
+          "page_count": 18,
+          "total_chars": 39627,
+          "chars_per_page": 2201.5,
+          "is_extractable": true
+        }
       ],
       "fields": {
         "title": {
@@ -94,6 +123,7 @@
           "recorded_value": "ZOA-2020-02: Nonconforming Buildings and Structures (Two-Family Dwellings)",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": null
         },
         "action_status": {
@@ -101,6 +131,7 @@
           "recorded_value": "Enacted",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": null
         },
         "introduced_date": {
@@ -108,6 +139,7 @@
           "recorded_value": "2020-09-08",
           "matched_string": "September 8, 2020",
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": "page 1, line 7"
         },
         "enacted_date": {
@@ -115,6 +147,7 @@
           "recorded_value": "2020-09-12",
           "matched_string": "September 12, 2020",
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": "page 1, line 6"
         },
         "effective_date": {
@@ -122,6 +155,7 @@
           "recorded_value": "2020-09-12",
           "matched_string": "September 12, 2020",
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": "page 1, line 6"
         },
         "bill_number": {
@@ -129,6 +163,7 @@
           "recorded_value": "ZOA-2020-02",
           "matched_string": "ZOA-2020-02",
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": "page 1, line 8"
         },
         "sponsor": {
@@ -136,6 +171,7 @@
           "recorded_value": "Arlington County Board",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+          "source_host": "arlington.granicus.com",
           "location": null
         }
       }
@@ -144,8 +180,19 @@
       "record": "arlington\\council_bills\\zoa_2026_01.md",
       "record_type": "legislative",
       "jurisdiction": "va/arlington",
+      "source_host": "www.arlingtonva.us",
       "sources_available": [
         ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin"
+      ],
+      "source_metrics": [
+        {
+          "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
+          "page_count": 2,
+          "total_chars": 3161,
+          "chars_per_page": 1580.5,
+          "is_extractable": true
+        }
       ],
       "fields": {
         "title": {
@@ -153,6 +200,7 @@
           "recorded_value": "ZOA-2026-01: Fort Myer Heights North Special District - Site Plan Approval Standards",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
           "location": null
         },
         "action_status": {
@@ -160,6 +208,7 @@
           "recorded_value": "Enacted",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
           "location": null
         },
         "enacted_date": {
@@ -167,6 +216,7 @@
           "recorded_value": "2026-01-24",
           "matched_string": "January 24, 2026",
           "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
           "location": "page 1, line 7"
         },
         "effective_date": {
@@ -174,6 +224,7 @@
           "recorded_value": "2026-01-24",
           "matched_string": "January 24, 2026",
           "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
           "location": "page 1, line 7"
         },
         "bill_number": {
@@ -181,6 +232,7 @@
           "recorded_value": "ZOA-2026-01",
           "matched_string": "ZOA-2026-01",
           "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
           "location": "page 1, line 3"
         },
         "sponsor": {
@@ -188,6 +240,7 @@
           "recorded_value": "Arlington County Board",
           "matched_string": "Arlington County Board",
           "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+          "source_host": "www.arlingtonva.us",
           "location": "page 1, line 12"
         }
       }
@@ -196,8 +249,19 @@
       "record": "fairfax_county\\council_bills\\zo_112_1_2024_9.md",
       "record_type": "legislative",
       "jurisdiction": "va/fairfax_county",
+      "source_host": "www.fairfaxcounty.gov",
       "sources_available": [
         ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin"
+      ],
+      "source_metrics": [
+        {
+          "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
+          "page_count": 5,
+          "total_chars": 9913,
+          "chars_per_page": 1982.6,
+          "is_extractable": true
+        }
       ],
       "fields": {
         "title": {
@@ -205,6 +269,7 @@
           "recorded_value": "ZO-112.1-2024-9: Data Centers Zoning Ordinance Amendment",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": null
         },
         "action_status": {
@@ -212,6 +277,7 @@
           "recorded_value": "Enacted",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": null
         },
         "introduced_date": {
@@ -219,6 +285,7 @@
           "recorded_value": "2024-07-16",
           "matched_string": "July 16, 2024",
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": "page 5, line 14"
         },
         "enacted_date": {
@@ -226,6 +293,7 @@
           "recorded_value": "2024-09-10",
           "matched_string": "September 10, 2024",
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": "page 1, line 9"
         },
         "effective_date": {
@@ -233,6 +301,7 @@
           "recorded_value": "2024-09-11",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": null
         },
         "bill_number": {
@@ -240,6 +309,7 @@
           "recorded_value": "ZO-112.1-2024-9",
           "matched_string": "1-2024",
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": "page 1, line 1"
         },
         "sponsor": {
@@ -247,6 +317,7 @@
           "recorded_value": "Fairfax County Board of Supervisors",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+          "source_host": "www.fairfaxcounty.gov",
           "location": null
         }
       }
@@ -255,65 +326,73 @@
       "record": "water\\measurements\\arlington_des\\copper_tap_2024.md",
       "record_type": "measurement",
       "jurisdiction": "va/arlington",
+      "source_host": "www.arlingtonva.us",
       "sources_available": [
         ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin"
       ],
-      "fields": {
-        "title": {
-          "result": "not found",
-          "recorded_value": "Copper Tap Water Compliance (Arlington County DES)",
-          "matched_string": null,
+      "source_metrics": [
+        {
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": null
-        },
+          "source_host": "www.arlingtonva.us",
+          "page_count": 4,
+          "total_chars": 15707,
+          "chars_per_page": 3926.75,
+          "is_extractable": true
+        }
+      ],
+      "fields": {
         "parameter": {
           "result": "found",
           "recorded_value": "Copper",
-          "matched_string": "Copper",
+          "matched_string": "Copper5                 ppm       1.3            AL - 1.3           0.070           0.0048 - 0.106      Corrosion of household plumbing systems; Erosion of natural deposits",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 2, line 39"
-        },
-        "reported_value": {
-          "result": "found",
-          "recorded_value": "0.07",
-          "matched_string": "0.07",
-          "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 20"
-        },
-        "unit": {
-          "result": "found",
-          "recorded_value": "ppm",
-          "matched_string": "ppm",
-          "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 3, line 86"
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
         },
         "limit": {
           "result": "found",
           "recorded_value": "1.3",
           "matched_string": "1.3",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 20"
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
+        },
+        "unit": {
+          "result": "found",
+          "recorded_value": "ppm",
+          "matched_string": "ppm",
+          "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
         },
         "determination": {
           "result": "found",
           "recorded_value": "None of the 16 samples tested for copper exceeded the current Action Level of 1.3 ppm.",
           "matched_string": "None of the 16 samples tested for copper exceeded the current Action Level of 1.3 ppm.",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 28"
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
         },
-        "reporting_period": {
+        "reported_value": {
           "result": "found",
-          "recorded_value": "2022",
-          "matched_string": "2022",
+          "recorded_value": "0.07",
+          "matched_string": "0.07",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 28"
+          "location": "page 4",
+          "rule_matched": "same_line",
+          "row_window": 3,
+          "column_header": "Summary of 2024 Water Quality Data Note: The Willston Zone",
+          "attribution_method": "pdfplumber word coordinates",
+          "source_host": "www.arlingtonva.us"
         },
-        "file_last_saved": {
-          "result": "not found",
-          "recorded_value": "2025-06-13",
-          "matched_string": null,
+        "sites_above_al": {
+          "result": "found",
+          "recorded_value": "None of the 16 samples tested for copper exceeded the current Action Level of 1.3 ppm.",
+          "matched_string": "None of the 16 samples tested for copper exceeded the current Action Level of 1.3 ppm.",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": null
+          "location": "page 4",
+          "rule_matched": "same_line",
+          "source_host": "www.arlingtonva.us"
         }
       }
     },
@@ -321,67 +400,130 @@
       "record": "water\\measurements\\arlington_des\\lead_tap_2024.md",
       "record_type": "measurement",
       "jurisdiction": "va/arlington",
+      "source_host": "www.arlingtonva.us",
       "sources_available": [
         ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin"
       ],
-      "fields": {
-        "title": {
-          "result": "not found",
-          "recorded_value": "Lead Tap Water Compliance (Arlington County DES)",
-          "matched_string": null,
+      "source_metrics": [
+        {
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": null
-        },
+          "source_host": "www.arlingtonva.us",
+          "page_count": 4,
+          "total_chars": 15707,
+          "chars_per_page": 3926.75,
+          "is_extractable": true
+        }
+      ],
+      "fields": {
         "parameter": {
           "result": "found",
           "recorded_value": "Lead",
-          "matched_string": "Lead",
+          "matched_string": "Lead6                    ppb       0             AL - 15             1.4             ND - 2.392         Corrosion of household plumbing systems; Erosion of natural deposits",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 2, line 7"
-        },
-        "reported_value": {
-          "result": "found",
-          "recorded_value": "1.4",
-          "matched_string": "1.4",
-          "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 21"
-        },
-        "unit": {
-          "result": "found",
-          "recorded_value": "ppb",
-          "matched_string": "ppb",
-          "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 2, line 122"
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
         },
         "limit": {
           "result": "found",
           "recorded_value": "15",
           "matched_string": "15",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 2, line 125"
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
+        },
+        "unit": {
+          "result": "found",
+          "recorded_value": "ppb",
+          "matched_string": "ppb",
+          "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
         },
         "determination": {
           "result": "found",
           "recorded_value": "None of the 16 samples tested for lead exceeded the current Action Level of 15 ppb.",
           "matched_string": "None of the 16 samples tested for lead exceeded the current Action Level of 15 ppb.",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 29"
+          "location": "page 4",
+          "source_host": "www.arlingtonva.us"
         },
-        "reporting_period": {
+        "reported_value": {
           "result": "found",
-          "recorded_value": "2022",
-          "matched_string": "2022",
+          "recorded_value": "1.4",
+          "matched_string": "1.4",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": "page 4, line 28"
+          "location": "page 4",
+          "rule_matched": "same_line",
+          "row_window": 3,
+          "column_header": "Summary of 2024 Water Quality Data Note: The Willston Zone",
+          "attribution_method": "pdfplumber word coordinates",
+          "source_host": "www.arlingtonva.us"
         },
-        "file_last_saved": {
-          "result": "not found",
-          "recorded_value": "2025-06-13",
-          "matched_string": null,
+        "sites_above_al": {
+          "result": "found",
+          "recorded_value": "None of the 16 samples tested for lead exceeded the current Action Level of 15 ppb.",
+          "matched_string": "None of the 16 samples tested for lead exceeded the current Action Level of 15 ppb.",
           "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
-          "location": null
+          "location": "page 4",
+          "rule_matched": "same_line",
+          "source_host": "www.arlingtonva.us"
         }
       }
+    }
+  ],
+  "extraction_thresholds": {
+    "min_total_chars": 200,
+    "min_chars_per_page": 50.0
+  },
+  "summary": {
+    "total_records": 6,
+    "total_fields": 39,
+    "found_exact": 27,
+    "found_derived": 0,
+    "not_found": 12,
+    "source_text_not_extractable": 0,
+    "source_not_available": 0
+  },
+  "source_files": [
+    {
+      "source_file": ".cache\\pdf_cache\\5b2457eb8fc00309327cc0c7ea580c240dce3d387f170412880fd555d1cd1e53.bin",
+      "source_host": "www.arlingtonva.us",
+      "page_count": 4,
+      "total_chars": 15707,
+      "chars_per_page": 3926.75,
+      "is_extractable": true
+    },
+    {
+      "source_file": ".cache\\pdf_cache\\78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin",
+      "source_host": "arlington.granicus.com",
+      "page_count": 18,
+      "total_chars": 39627,
+      "chars_per_page": 2201.5,
+      "is_extractable": true
+    },
+    {
+      "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
+      "source_host": "alexandria.legistar.com",
+      "page_count": 72,
+      "total_chars": 150248,
+      "chars_per_page": 2086.777777777778,
+      "is_extractable": true
+    },
+    {
+      "source_file": ".cache\\pdf_cache\\c8c406346e3ce328d0719a057479e88773d06af7a4cac05ba928106c345c2c25.bin",
+      "source_host": "www.fairfaxcounty.gov",
+      "page_count": 5,
+      "total_chars": 9913,
+      "chars_per_page": 1982.6,
+      "is_extractable": true
+    },
+    {
+      "source_file": ".cache\\pdf_cache\\e0f409eee4194cb82272263104b5290f4001e5513151a3567ad5919d3e8a77f5.bin",
+      "source_host": "www.arlingtonva.us",
+      "page_count": 2,
+      "total_chars": 3161,
+      "chars_per_page": 1580.5,
+      "is_extractable": true
     }
   ]
 }

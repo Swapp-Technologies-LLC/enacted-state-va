@@ -15,6 +15,9 @@ REPO_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_DIR))
 
 from scripts.check_field_accuracy import (
+    measure_source_text,
+    MIN_TOTAL_CHARS,
+    MIN_CHARS_PER_PAGE,
     normalize_ws,
     generate_date_renderings,
     generate_identifier_renderings,
@@ -115,6 +118,59 @@ class TestFieldAccuracy(unittest.TestCase):
         self.assertIn("repository", data)
         self.assertIn("records", data)
         self.assertEqual(len(data["records"]), 6)
+
+
+    # Blank PDF without text layer yields 'source text not extractable'
+    def test_unextractable_blank_pdf_yields_source_text_not_extractable(self):
+        import tempfile
+        import pypdf
+
+        # Create a 1-page blank PDF fixture using pypdf.PdfWriter().add_blank_page(width=612, height=792)
+        writer = pypdf.PdfWriter()
+        writer.add_blank_page(width=612, height=792)
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tf:
+            temp_pdf_path = tf.name
+            writer.write(tf)
+
+        try:
+            pages = extract_text_from_file(temp_pdf_path)
+            self.assertEqual(len(pages), 1, "Blank PDF must have 1 page")
+            tot_c, p_c, cpp, is_e = measure_source_text(pages)
+            self.assertEqual(tot_c, 0, "Blank PDF fixture must yield 0 extractable characters")
+            self.assertEqual(p_c, 1, "Blank PDF fixture must have page count 1")
+            self.assertEqual(cpp, 0.0, "Blank PDF fixture must have 0.0 chars per page")
+            self.assertFalse(is_e, "Blank PDF fixture must be marked unextractable (< 200 chars or < 50 cpp)")
+
+            # In check_field_accuracy, fields evaluated against unextractable sources return 'source text not extractable'
+            field_value = "2026-01-01"
+            match = find_needle_in_pages(pages, [field_value])
+            self.assertIsNone(match)
+            res_status = "source text not extractable" if not is_e else "not found"
+            self.assertEqual(res_status, "source text not extractable")
+        finally:
+            if os.path.exists(temp_pdf_path):
+                os.remove(temp_pdf_path)
+
+    # Text fixture yields 'found' for present string and 'not found' for absent string
+    def test_extractable_text_fixture_yields_found_and_not_found(self):
+        source_file = self.pdf_cache / "78bef4a799e032ba87376b9226ef18dd57ad1efe8a70f844b88d7ab4b2a7b2fe.bin"
+        pages = extract_text_from_file(str(source_file))
+        tot_c, p_c, cpp, is_e = measure_source_text(pages)
+        self.assertTrue(is_e, "Text PDF fixture must be extractable")
+        self.assertGreaterEqual(tot_c, MIN_TOTAL_CHARS)
+        self.assertGreaterEqual(cpp, MIN_CHARS_PER_PAGE)
+
+        # Present string -> found
+        m_found = find_needle_in_pages(pages, ["ZOA-2020-02"])
+        self.assertIsNotNone(m_found, "Present string must be found in extractable source")
+        status_found = "found" if m_found else ("source text not extractable" if not is_e else "not found")
+        self.assertEqual(status_found, "found")
+
+        # Absent string -> not found
+        m_not = find_needle_in_pages(pages, ["Nonexistent Phrase Absent 99999"])
+        self.assertIsNone(m_not, "Absent string must not be found in extractable source")
+        status_not = "found" if m_not else ("source text not extractable" if not is_e else "not found")
+        self.assertEqual(status_not, "not found")
 
 if __name__ == "__main__":
     unittest.main()
