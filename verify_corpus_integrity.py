@@ -611,6 +611,22 @@ def main():
         else:
             print(f"  ✓ {jur}: Verified authority.yaml contact integrity.")
 
+    # -------------------------------------------------------------
+    # CHECK 10: Field Accuracy Verification Gate for Measurement Records
+    # -------------------------------------------------------------
+    print("\n[CHECK 10] Field Accuracy Verification Gate for Measurement Records:")
+    try:
+        from scripts.check_field_accuracy import run_field_accuracy_check
+        fa_res = run_field_accuracy_check(REPO_ROOT)
+        if fa_res != 0:
+            print("  FAIL: Field accuracy check failed for measurement records!")
+            failed_checks += 1
+        else:
+            print("  ✓ Measurement records field accuracy verified.")
+    except Exception as e:
+        print(f"  FAIL: Error executing field accuracy check: {e}")
+        failed_checks += 1
+
     if robots_skipped_by_host:
         print("\nRobots.txt Skipped URLs by Host:")
         for host, count in sorted(robots_skipped_by_host.items()):
@@ -618,7 +634,7 @@ def main():
 
     print("\n===============================================================")
     if failed_checks == 0:
-        print(f"  ALL 9 CORPUS INTEGRITY VERIFICATION GATES PASSED! ✅ ({repo_name})")
+        print(f"  ALL 10 CORPUS INTEGRITY VERIFICATION GATES PASSED! ✅ ({repo_name})")
         print("===============================================================\n")
         sys.exit(0)
     else:
