@@ -211,7 +211,7 @@ def fetch_corpus_url(crawler: EnactedCrawler, url: str, timeout: int = 25, retri
                 return "robots_disallowed", status_code, data, err
             if status_code in (200, 302):
                 return "ok", status_code, data, err
-            if status_code in (404, 410) or (400 <= status_code < 500):
+            if 300 <= status_code < 500:
                 return "http_error", status_code, data, err
             # 5xx or 0 (timeout / connection error)
             if attempt < retries:
