@@ -17,6 +17,7 @@ Deterministic verification suite enforcing:
 import os
 import sys
 import re
+import time
 import yaml
 import ssl
 import hashlib
@@ -194,6 +195,35 @@ def get_verify_crawler() -> EnactedCrawler:
         return EnactedCrawler(min_interval=float(os.environ["VERIFY_CRAWLER_INTERVAL"]))
     return EnactedCrawler()
 
+
+def fetch_corpus_url(crawler: EnactedCrawler, url: str, timeout: int = 25, retries: int = 1):
+    """
+    Founder ruling (2026-11-05): on a timeout, connection error (status_code == 0 or exception)
+    or 5xx, retry once. If still failing, return ('unreachable', status_code, b"", err).
+    For client errors (404, 410, etc.), return ('http_error', status_code, b"", err) immediately.
+    For 200/302, return ('ok', status_code, body, "").
+    If robots.txt disallows, return ('robots_disallowed', status_code, b"", err).
+    """
+    for attempt in range(retries + 1):
+        try:
+            allowed, status_code, data, err = crawler.fetch(url, timeout=timeout)
+            if not allowed:
+                return "robots_disallowed", status_code, data, err
+            if status_code in (200, 302):
+                return "ok", status_code, data, err
+            if status_code in (404, 410) or (400 <= status_code < 500):
+                return "http_error", status_code, data, err
+            # 5xx or 0 (timeout / connection error)
+            if attempt < retries:
+                time.sleep(1.0)
+                continue
+            return "unreachable", status_code, data, err
+        except Exception as exc:
+            if attempt < retries:
+                time.sleep(1.0)
+                continue
+            return "unreachable", 0, b"", str(exc)
+
 def main():
     repo_name = os.path.basename(REPO_ROOT)
     print("===============================================================")
@@ -308,14 +338,16 @@ def main():
                 print(f"  not fetched: robots ({url})")
                 continue
 
-            allowed, status_code, body, err = crawler.fetch(url, timeout=25)
-            if not allowed:
+            status, status_code, body, err = fetch_corpus_url(crawler, url, timeout=25)
+            if status == "robots_disallowed":
                 host = urlparse(url).netloc.lower()
                 robots_skipped_by_host[host] = robots_skipped_by_host.get(host, 0) + 1
                 print(f"  not fetched: robots ({url})")
                 continue
-
-            if status_code in (200, 302):
+            elif status == "unreachable":
+                print(f"  unreachable at gate time: {url}")
+                continue
+            elif status == "ok":
                 print(f"  ✓ HTTP {status_code} OK: {url[:70]}...")
             else:
                 print(f"  FAIL: {url} returned {status_code} ({err})")
@@ -366,13 +398,16 @@ def main():
                 data = cf.read()
         else:
             try:
-                allowed, status_code, body, err = crawler.fetch(pdf_url, timeout=30)
-                if not allowed:
+                status, status_code, body, err = fetch_corpus_url(crawler, pdf_url, timeout=30)
+                if status == "robots_disallowed":
                     host = urlparse(pdf_url).netloc.lower()
                     robots_skipped_by_host[host] = robots_skipped_by_host.get(host, 0) + 1
                     print(f"  not fetched: robots ({pdf_url})")
                     continue
-                if status_code != 200:
+                if status == "unreachable":
+                    print(f"  unreachable at gate time: {pdf_url}")
+                    continue
+                if status != "ok":
                     print(f"  FAIL: Could not download {pdf_url}: HTTP {status_code} ({err})")
                     failed_checks += 1
                     continue
@@ -384,12 +419,13 @@ def main():
                 failed_checks += 1
                 continue
 
-        actual_sha = hashlib.sha256(data).hexdigest()
-        if actual_sha != expected_sha:
-            print(f"  FAIL: {r['rel_path']} hash mismatch! Expected {expected_sha}, got {actual_sha}")
-            failed_checks += 1
-        else:
-            print(f"  ✓ SHA-256 match ({expected_sha[:12]}...): {r['rel_path']}")
+        if data is not None:
+            actual_sha = hashlib.sha256(data).hexdigest()
+            if actual_sha != expected_sha:
+                print(f"  FAIL: {r['rel_path']} hash mismatch! Expected {expected_sha}, got {actual_sha}")
+                failed_checks += 1
+            else:
+                print(f"  ✓ SHA-256 match ({expected_sha[:12]}...): {r['rel_path']}")
 
         if r["fm"].get("record_type") == "measurement":
             system_id = fm.get("system_id") or fm.get("pwsid")
