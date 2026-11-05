@@ -172,5 +172,67 @@ class TestFieldAccuracy(unittest.TestCase):
         status_not = "found" if m_not else ("source text not extractable" if not is_e else "not found")
         self.assertEqual(status_not, "not found")
 
+    # Fixture record with two cached files (source + status) pairs two different hosts (ig23b)
+    def test_fixture_source_and_status_pairs_two_different_hosts(self):
+        """Test A3 (ig23b): A fixture record with two cached files (source + status) pairs each file with its exact field URL host, printing two different hosts."""
+        import tempfile
+        import hashlib
+        import io
+
+        # Rule 11: Synthetic identifiers, example.invalid URLs, sha256("fixture")
+        sha_src = hashlib.sha256(b"fixture source file content").hexdigest()
+        sha_status = hashlib.sha256(b"fixture status file content").hexdigest()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_root = Path(tmpdir)
+            cache_dir = tmp_root / ".cache"
+            pdf_cache = cache_dir / "pdf_cache"
+            pdf_cache.mkdir(parents=True)
+            jur_dir = tmp_root / "xx_testville" / "council_bills"
+            jur_dir.mkdir(parents=True)
+
+            src_text = ("TEST-0001 enacted law bill text. " * 15).strip()
+            status_text = ("<status>TEST-0001 passed and enacted status text.</status> " * 15).strip()
+
+            (pdf_cache / f"{sha_src}.bin").write_text(src_text, encoding="utf-8")
+            (cache_dir / f"{sha_status}.xml").write_text(status_text, encoding="utf-8")
+
+            record_content = f"""---
+record_type: legislative
+title: TEST-0001 Act of Testville
+bill_number: TEST-0001
+action_status: Enacted
+source_sha256: {sha_src}
+source_pdf: https://source.example.invalid/files/bill_test_0001.pdf
+status_source_sha256: {sha_status}
+status_source_url: https://status.example.invalid/xml/act_test_0001.xml
+---
+## Enacted text
+Test text.
+"""
+            (jur_dir / "test_0001.md").write_text(record_content, encoding="utf-8")
+
+            stdout_capture = io.StringIO()
+            old_stdout = sys.stdout
+            sys.stdout = stdout_capture
+            try:
+                exit_code = run_field_accuracy_check(str(tmp_root))
+            finally:
+                sys.stdout = old_stdout
+
+            output_text = stdout_capture.getvalue()
+            self.assertEqual(exit_code, 0)
+
+            sidecar_path = tmp_root / "verification" / "field_accuracy.json"
+            self.assertTrue(sidecar_path.exists())
+            with open(sidecar_path, "r", encoding="utf-8") as sf:
+                sidecar = json.load(sf)
+
+            src_metrics = {sf["source_file"]: sf["source_host"] for sf in sidecar.get("source_files", [])}
+            self.assertIn("source.example.invalid", src_metrics.values())
+            self.assertIn("status.example.invalid", src_metrics.values())
+            self.assertIn("source.example.invalid", output_text)
+            self.assertIn("status.example.invalid", output_text)
+
 if __name__ == "__main__":
     unittest.main()

@@ -39,6 +39,66 @@ except ImportError:
 MIN_TOTAL_CHARS = 200
 MIN_CHARS_PER_PAGE = 50.0
 
+def extract_sha_from_path(sf_path: str) -> str:
+    """Extracts a 64-character hex sha256 from a cached file path or returns empty string."""
+    if not sf_path:
+        return ""
+    base = os.path.basename(sf_path)
+    name_without_ext = base.split('.')[0]
+    if len(name_without_ext) == 64 and all(c in '0123456789abcdefABCDEF' for c in name_without_ext):
+        return name_without_ext.lower()
+    return ""
+
+def get_host_for_sha(fm: dict, sha: str) -> str:
+    """
+    Pairs a cached file's sha256 with the corresponding record field URL per directive ig23b:
+    - source_sha256 -> source_pdf or primary_source_url
+    - status_source_sha256 -> status_source_url
+    - lims_source_sha256 -> lims_source_url
+    - any other *_sha256 -> its *_url
+    Prints that URL's exact host, not normalised (no .lower()). No match -> 'unmatched'.
+    """
+    if not sha or not isinstance(fm, dict):
+        return "unmatched"
+    target_sha = str(sha).strip().lower()
+    
+    # 1. source_sha256 -> source_pdf or primary_source_url
+    if str(fm.get('source_sha256', '')).strip().lower() == target_sha:
+        url = fm.get('source_pdf') or fm.get('primary_source_url')
+        if url:
+            host = urlparse(url).netloc
+            if host:
+                return host
+                
+    # 2. status_source_sha256 -> status_source_url
+    if str(fm.get('status_source_sha256', '')).strip().lower() == target_sha:
+        url = fm.get('status_source_url')
+        if url:
+            host = urlparse(url).netloc
+            if host:
+                return host
+
+    # 3. lims_source_sha256 -> lims_source_url
+    if str(fm.get('lims_source_sha256', '')).strip().lower() == target_sha:
+        url = fm.get('lims_source_url')
+        if url:
+            host = urlparse(url).netloc
+            if host:
+                return host
+
+    # 4. Any other *_sha256 -> its *_url
+    for k, v in fm.items():
+        if k.endswith('_sha256') and str(v).strip().lower() == target_sha:
+            prefix = k[:-7]
+            url_key = f"{prefix}_url"
+            url = fm.get(url_key)
+            if url:
+                host = urlparse(url).netloc
+                if host:
+                    return host
+                    
+    return "unmatched"
+
 def measure_source_text(pages):
     """
     Measures text actually extracted from pages after whitespace collapsing.
@@ -893,7 +953,10 @@ def run_field_accuracy_check(repo_root):
 
         # Measurement record branch: strict page-scoped verification gate
         url = fm.get('primary_source_url') or fm.get('source_pdf') or ""
-        source_host = urlparse(url).netloc.lower() if url else ""
+        primary_host = get_host_for_sha(fm, fm.get('source_sha256'))
+        if primary_host == "unmatched" and url:
+            primary_host = urlparse(url).netloc
+        source_host = primary_host
 
         if rtype == 'measurement':
             passed, err_msg, m_fields, record_fails = check_measurement_record(fm, rel, repo_root)
@@ -910,9 +973,13 @@ def run_field_accuracy_check(repo_root):
                 if sf not in source_file_metrics and os.path.exists(abs_sf):
                     sf_pages = extract_text_from_file(abs_sf)
                     tot_c, p_c, cpp, is_e = measure_source_text(sf_pages)
+                    sf_sha = extract_sha_from_path(sf)
+                    sf_host = get_host_for_sha(fm, sf_sha)
+                    if sf_host == "unmatched":
+                        sf_host = primary_host
                     source_file_metrics[sf] = {
                         "source_file": sf,
-                        "source_host": source_host,
+                        "source_host": sf_host,
                         "page_count": p_c,
                         "total_chars": tot_c,
                         "chars_per_page": cpp,
@@ -952,6 +1019,10 @@ def run_field_accuracy_check(repo_root):
 
         # Legislative record branch (existing report-only logic)
         source_shas = [fm.get('source_sha256'), fm.get('status_source_sha256'), fm.get('veto_letter_sha256')]
+        for k, v in fm.items():
+            if k.endswith('_sha256') and v and v not in source_shas:
+                source_shas.append(v)
+
         loaded_sources = []
         for s in source_shas:
             if not s:
@@ -970,16 +1041,19 @@ def run_field_accuracy_check(repo_root):
                     if pages:
                         rel_src = os.path.relpath(c, repo_root)
                         tot_c, p_c, cpp, is_e = measure_source_text(pages)
+                        sf_host = get_host_for_sha(fm, s)
+                        if sf_host == "unmatched":
+                            sf_host = primary_host
                         if rel_src not in source_file_metrics:
                             source_file_metrics[rel_src] = {
                                 "source_file": rel_src,
-                                "source_host": source_host,
+                                "source_host": sf_host,
                                 "page_count": p_c,
                                 "total_chars": tot_c,
                                 "chars_per_page": cpp,
                                 "is_extractable": is_e
                             }
-                        loaded_sources.append((rel_src, pages, is_e))
+                        loaded_sources.append((rel_src, pages, is_e, sf_host))
                     break
 
         fields_to_check = []
@@ -1058,12 +1132,16 @@ def run_field_accuracy_check(repo_root):
                         counts["found"] += 1
                         counts["derived_expiry"] += 1
                         counts["by_jurisdiction"][jur]["found"] += 1
+                        exp_sha = extract_sha_from_path(exp_source)
+                        exp_host = get_host_for_sha(fm, exp_sha)
+                        if exp_host == "unmatched":
+                            exp_host = primary_host
                         field_res = {
                             "result": res_status,
                             "recorded_value": str(val),
                             "matched_string": f"expires_date {exp_date} found before run date",
                             "source_file": exp_source,
-                            "source_host": source_host,
+                            "source_host": exp_host,
                             "location": exp_location
                         }
                         record_sidecar["fields"][fname] = field_res
@@ -1088,12 +1166,16 @@ def run_field_accuracy_check(repo_root):
                 res_status = "found"
                 counts["found"] += 1
                 counts["by_jurisdiction"][jur]["found"] += 1
+                m_sha = extract_sha_from_path(matched_src)
+                m_host = get_host_for_sha(fm, m_sha)
+                if m_host == "unmatched":
+                    m_host = primary_host
                 field_res = {
                     "result": res_status,
                     "recorded_value": str(val),
                     "matched_string": match["matched_string"],
                     "source_file": matched_src,
-                    "source_host": source_host,
+                    "source_host": m_host,
                     "location": match["location"]
                 }
             else:
@@ -1105,15 +1187,20 @@ def run_field_accuracy_check(repo_root):
                     res_status = "not found"
                     counts["not_found"] += 1
                     counts["by_jurisdiction"][jur]["not_found"] += 1
+                first_src = loaded_sources[0][0] if loaded_sources else None
+                f_sha = extract_sha_from_path(first_src) if first_src else None
+                f_host = get_host_for_sha(fm, f_sha) if f_sha else primary_host
+                if f_host == "unmatched":
+                    f_host = primary_host
                 field_res = {
                     "result": res_status,
                     "recorded_value": str(val),
                     "matched_string": None,
-                    "source_file": loaded_sources[0][0] if loaded_sources else None,
-                    "source_host": source_host,
+                    "source_file": first_src,
+                    "source_host": f_host,
                     "location": None
                 }
-                unverified_fields.append((rel, fname, str(val), loaded_sources[0][0] if loaded_sources else "none", res_status, source_host))
+                unverified_fields.append((rel, fname, str(val), first_src or "none", res_status, f_host))
 
             record_sidecar["fields"][fname] = field_res
 

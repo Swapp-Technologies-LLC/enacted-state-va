@@ -1,6 +1,6 @@
 {
   "repository": "enacted-state-va",
-  "check_timestamp": "2026-11-04T21:53:54.151531+00:00",
+  "check_timestamp": "2026-11-05T17:50:26.303957+00:00",
   "date_renderings_rules": [
     "YYYY-MM-DD",
     "MM/DD/YYYY",
@@ -26,14 +26,14 @@
       "record": "alexandria\\ordinances\\ord_5614.md",
       "record_type": "legislative",
       "jurisdiction": "va/alexandria",
-      "source_host": "alexandria.legistar.com",
+      "source_host": "legistar.granicus.com",
       "sources_available": [
         ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin"
       ],
       "source_metrics": [
         {
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "page_count": 72,
           "total_chars": 150248,
           "chars_per_page": 2086.777777777778,
@@ -46,7 +46,7 @@
           "recorded_value": "Ord. No. 5614: Commercial Uses Zoning Regulations Update",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": null
         },
         "action_status": {
@@ -54,7 +54,7 @@
           "recorded_value": "Enacted",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": null
         },
         "introduced_date": {
@@ -62,7 +62,7 @@
           "recorded_value": "2025-12-13",
           "matched_string": "December 13, 2025",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": "page 1, line 27"
         },
         "enacted_date": {
@@ -70,7 +70,7 @@
           "recorded_value": "2026-01-24",
           "matched_string": "January 24, 2026",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": "page 72, line 24"
         },
         "effective_date": {
@@ -78,7 +78,7 @@
           "recorded_value": "2026-01-24",
           "matched_string": "January 24, 2026",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": "page 72, line 24"
         },
         "bill_number": {
@@ -86,7 +86,7 @@
           "recorded_value": "Ord. No. 5614",
           "matched_string": "5614",
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": "page 1, line 4"
         },
         "sponsor": {
@@ -94,7 +94,7 @@
           "recorded_value": "Alexandria City Council",
           "matched_string": null,
           "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-          "source_host": "alexandria.legistar.com",
+          "source_host": "legistar.granicus.com",
           "location": null
         }
       }
@@ -503,7 +503,7 @@
     },
     {
       "source_file": ".cache\\pdf_cache\\9cf596d4fceadc4e9ff72919c5cebb988a22457f16f75a13170cce83913a8708.bin",
-      "source_host": "alexandria.legistar.com",
+      "source_host": "legistar.granicus.com",
       "page_count": 72,
       "total_chars": 150248,
       "chars_per_page": 2086.777777777778,
