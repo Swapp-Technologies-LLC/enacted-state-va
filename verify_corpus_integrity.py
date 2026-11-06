@@ -211,7 +211,7 @@ def fetch_corpus_url(crawler: EnactedCrawler, url: str, timeout: int = 25, retri
                 return "robots_disallowed", status_code, data, err
             if status_code == 200:
                 return "ok", status_code, data, err
-            if 300 <= status_code < 500:
+            if 200 < status_code < 500:
                 return "http_error", status_code, data, err
             # 5xx or 0 (timeout / connection error)
             if attempt < retries:
@@ -507,7 +507,7 @@ def main():
             schema_errs += 1
 
         if rtype == "measurement":
-            for field in ("parameter", "value", "unit", "reporting_period", "system"):
+            for field in ("parameter", "value", "unit", "reporting_period", "system", "title"):
                 if not fm.get(field):
                     print(f"  FAIL: {rel} measurement missing '{field}'")
                     schema_errs += 1
@@ -607,7 +607,7 @@ def main():
         if any(p in (".git", ".cache", "node_modules", "dist") for p in root.split(os.sep)):
             continue
         for f in files:
-            if f == "verify_corpus_integrity.py" or f.lower().endswith(binary_extensions):
+            if f in (".git", "verify_corpus_integrity.py") or f.lower().endswith(binary_extensions):
                 continue
             fpath = os.path.join(root, f)
             relpath = os.path.relpath(fpath, REPO_ROOT).replace(os.sep, "/")
