@@ -290,16 +290,31 @@ def test_307_unfollowed_redirect_returns_http_error_no_retry():
     mock_sleep.assert_not_called()
 
 
-def test_302_followed_redirect_returns_ok():
+def test_302_unfollowed_redirect_returns_http_error_no_retry():
     crawler = MagicMock()
     crawler.fetch.side_effect = [
-        (True, 302, b"redirect content", ""),
+        (True, 302, b"", "Found"),
     ]
 
     with patch("time.sleep") as mock_sleep:
         status, status_code, data, err = fetch_corpus_url(crawler, FIXTURE_URL, timeout=10, retries=1)
 
-    assert status == "ok"
+    assert status == "http_error"
     assert status_code == 302
+    assert crawler.fetch.call_count == 1
+    mock_sleep.assert_not_called()
+
+
+def test_308_unfollowed_redirect_returns_http_error_no_retry():
+    crawler = MagicMock()
+    crawler.fetch.side_effect = [
+        (True, 308, b"", "Permanent Redirect"),
+    ]
+
+    with patch("time.sleep") as mock_sleep:
+        status, status_code, data, err = fetch_corpus_url(crawler, FIXTURE_URL, timeout=10, retries=1)
+
+    assert status == "http_error"
+    assert status_code == 308
     assert crawler.fetch.call_count == 1
     mock_sleep.assert_not_called()

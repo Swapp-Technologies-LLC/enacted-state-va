@@ -209,7 +209,7 @@ def fetch_corpus_url(crawler: EnactedCrawler, url: str, timeout: int = 25, retri
             allowed, status_code, data, err = crawler.fetch(url, timeout=timeout)
             if not allowed:
                 return "robots_disallowed", status_code, data, err
-            if status_code in (200, 302):
+            if status_code == 200:
                 return "ok", status_code, data, err
             if 300 <= status_code < 500:
                 return "http_error", status_code, data, err
