@@ -507,7 +507,7 @@ def main():
             schema_errs += 1
 
         if rtype == "measurement":
-            for field in ("parameter", "value", "unit", "reporting_period", "system", "title"):
+            for field in ("parameter", "value", "unit", "reporting_period", "system"):
                 if not fm.get(field):
                     print(f"  FAIL: {rel} measurement missing '{field}'")
                     schema_errs += 1

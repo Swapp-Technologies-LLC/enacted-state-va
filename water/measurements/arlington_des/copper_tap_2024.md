@@ -1,7 +1,6 @@
 ---
 record_type: measurement
 instrument_type: Drinking Water Quality
-title: Copper Tap Water Compliance (Arlington County DES)
 short_title: Copper at Customer Tap
 source_title: 2024 Annual Water Quality Report
 system: Willston Zone
